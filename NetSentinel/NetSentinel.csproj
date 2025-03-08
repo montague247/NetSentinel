@@ -1,10 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <ItemGroup>
+    <ProjectReference Include="..\NetSentinel.Core\NetSentinel.Core.csproj" />
+  </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>Dirk Helbig</Authors>
+    <Copyright>Copyright © 2025 Dirk Helbig</Copyright>
   </PropertyGroup>
-
 </Project>
