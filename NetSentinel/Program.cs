@@ -1,3 +1,4 @@
 ﻿using NetSentinel;
 
-ArgumentProcessor.Process(args);
+var handlers = ArgumentProcessor.Process(args);
+ArgumentProcessor.Execute(handlers);

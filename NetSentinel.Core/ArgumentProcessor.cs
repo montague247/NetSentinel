@@ -11,8 +11,9 @@ namespace NetSentinel
             var handlers = new List<IArgumentHandler>();
             var index = 0;
 
-            foreach (var argument in arguments)
+            for (int i = 0; i < arguments.Length; i++)
             {
+                var argument = arguments[i];
                 var handler = factory.GetHandler(argument);
 
                 if (handler == null)
@@ -23,10 +24,21 @@ namespace NetSentinel
                 }
 
                 handlers.Add(handler);
+
+                index++;
                 handler.Process(arguments, ref index);
+                i = index - 1;
             }
 
             return [.. handlers];
+        }
+
+        public static void Execute(params IArgumentHandler[] handlers)
+        {
+            foreach (var handler in handlers)
+            {
+                handler.Execute();
+            }
         }
     }
 }
