@@ -12,11 +12,9 @@ namespace NetSentinel.IoT
 
             if (ct.IsAvailable)
             {
-                Console.WriteLine($"Temperature: {ct.Temperature.DegreesCelsius} °C");
-
                 foreach (var (Sensor, Temperature) in ct.ReadTemperatures())
                 {
-                    Console.WriteLine($"Sensor '{Sensor}': {Temperature.DegreesCelsius} °C");
+                    Console.WriteLine($"Sensor '{Sensor}': {Temperature.DegreesCelsius:0.00} °C");
                 }
             }
             else
