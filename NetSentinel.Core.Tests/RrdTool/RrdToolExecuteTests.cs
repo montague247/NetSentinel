@@ -5,9 +5,9 @@ namespace NetSentinel.Core.Tests.RrdTool
     public sealed class RrdToolExecuteTests
     {
         [Fact]
-        public void Create()
+        public void CreateSimple()
         {
-            var fileName = Path.GetFullPath($"{nameof(Create)}.rrd");
+            var fileName = Path.GetFullPath($"Simple.rrd");
 
             RrdToolExecute.Create(c => c.FileName(fileName));
 
@@ -15,9 +15,25 @@ namespace NetSentinel.Core.Tests.RrdTool
         }
 
         [Fact]
+        public void UpdateSimple()
+        {
+            var fileName = Path.GetFullPath($"Simple.rrd");
+
+            if (!File.Exists(fileName))
+                CreateSimple();
+
+            RrdToolExecute.Update(u => u
+                                    .FileName(fileName)
+                                    .Value(new Random().NextDouble() * 100)
+                                );
+
+            Assert.True(File.Exists(fileName));
+        }
+
+        [Fact]
         public void Create4RoundRobinArchives()
         {
-            var fileName = Path.GetFullPath($"{nameof(Create4RoundRobinArchives)}.rrd");
+            var fileName = Path.GetFullPath("4RoundRobinArchives.rrd");
 
             RrdToolExecute.Create(c => c
                                     .FileName(fileName)
@@ -55,7 +71,7 @@ namespace NetSentinel.Core.Tests.RrdTool
         [Fact]
         public void Create1MinuteDefault()
         {
-            var fileName = Path.GetFullPath($"{nameof(Create1MinuteDefault)}.rrd");
+            var fileName = Path.GetFullPath("1MinuteDefault.rrd");
 
             RrdToolExecute.Create(c => c
                                     .FileName(fileName)
