@@ -1,3 +1,4 @@
+using System.Reflection;
 using NetSentinel.ArgumentHandling;
 using Serilog;
 
@@ -38,6 +39,23 @@ namespace NetSentinel
             foreach (var handler in handlers)
             {
                 handler.Execute();
+            }
+        }
+
+        public static void GenerateHelp()
+        {
+            var factory = new ArgumentHandlerFactory();
+
+            Console.WriteLine("Available arguments:");
+
+            foreach (var handler in factory.Handlers)
+            {
+                var attribute = handler.Value.GetCustomAttribute<ArgumentHandlerAttribute>();
+
+                if (attribute == null)
+                    continue;
+
+                Console.WriteLine(attribute.Name);
             }
         }
     }

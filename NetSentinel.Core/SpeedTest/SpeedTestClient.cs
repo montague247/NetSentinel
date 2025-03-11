@@ -172,7 +172,11 @@ namespace NetSentinel.SpeedTest
             if (server.Url == null)
                 throw new InvalidOperationException("Server URL is null");
 
-            return new Uri(new Uri(server.Url), ".").OriginalString + file;
+            var uri = new Uri(new Uri(server.Url), ".").OriginalString + file;
+
+            Console.WriteLine(uri);
+
+            return uri;
         }
 
         private static IEnumerable<string> GenerateDownloadUrls(Server server, int retryCount)

@@ -23,6 +23,8 @@ namespace NetSentinel.ArgumentHandling
             }
         }
 
+        public IReadOnlyDictionary<string, Type> Handlers { get { return _handlers; } }
+
         public IArgumentHandler? GetHandler(string argument)
         {
             if (_handlers.TryGetValue(argument, out var type))
