@@ -56,6 +56,9 @@ namespace NetSentinel
                     continue;
 
                 Console.WriteLine(attribute.Name);
+
+                var instance = (IArgumentHandler?)Activator.CreateInstance(handler.Value);
+                instance?.GenerateHelp(1);
             }
         }
     }

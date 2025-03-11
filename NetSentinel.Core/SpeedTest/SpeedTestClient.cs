@@ -16,7 +16,12 @@ namespace NetSentinel.SpeedTest
             "https://c.speedtest.net/speedtest-servers.php"
         ];
 
-        private static readonly int[] DownloadSizes = [350, 750, 1500, 3000];
+        private static readonly int[] DownloadSizes = [
+            350, // ~ 1 Mbit
+            750, // ~ 4 Mbit
+            1500, // ~ 17 Mbit
+            3000 // ~ 68 Mbit
+        ];
         private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private const int MaxUploadSize = 4; // 400 KB
 
@@ -55,9 +60,9 @@ namespace NetSentinel.SpeedTest
             return settings;
         }
 
-        public double TestDownloadSpeed(Server server, int simultaneousDownloads = 2, int retryCount = 2)
+        public double TestDownloadSpeed(Server server, double maxMbit, int simultaneousDownloads = 2, int retryCount = 2)
         {
-            var testData = GenerateDownloadUrls(server, retryCount);
+            var testData = GenerateDownloadUrls(server, maxMbit, retryCount);
 
             return TestSpeed(testData, async (client, url) =>
             {
@@ -177,12 +182,17 @@ namespace NetSentinel.SpeedTest
             return new Uri(new Uri(server.Url), ".").OriginalString + file;
         }
 
-        private static IEnumerable<string> GenerateDownloadUrls(Server server, int retryCount)
+        private static IEnumerable<string> GenerateDownloadUrls(Server server, double maxMbit, int retryCount)
         {
             var downloadUriBase = CreateTestUrl(server, "random{0}x{0}.jpg?r={1}");
 
             foreach (var downloadSize in DownloadSizes)
             {
+                var mbit = downloadSize * downloadSize * 8 / 1024d / 1024d;
+
+                if (mbit > maxMbit)
+                    continue;
+
                 for (var i = 0; i < retryCount; i++)
                 {
                     yield return string.Format(downloadUriBase, downloadSize, i);

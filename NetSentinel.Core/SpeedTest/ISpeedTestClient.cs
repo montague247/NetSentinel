@@ -20,7 +20,7 @@ namespace NetSentinel.SpeedTest
         /// Test download speed to server
         /// </summary>
         /// <returns>Download speed in Kbps</returns>
-        double TestDownloadSpeed(Server server, int simultaneousDownloads = 2, int retryCount = 2);
+        double TestDownloadSpeed(Server server, double maxMbit, int simultaneousDownloads = 2, int retryCount = 2);
 
         /// <summary>
         /// Test upload speed to server

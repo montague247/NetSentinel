@@ -1,12 +1,20 @@
+using System.Globalization;
 using NetSentinel.ArgumentHandling;
 using NetSentinel.SpeedTest.Types;
 
 namespace NetSentinel.SpeedTest
 {
     [ArgumentHandler("--speed-test")]
-    public sealed class ArgumentHandler : IArgumentHandler
+    public sealed class ArgumentHandler : ArgumentHandlerBase
     {
-        public void Execute()
+        private double _maxMbit = 1024;
+
+        protected override Dictionary<string, string> Help => new()
+        {
+            { "-max-mbit", "Maximum speed in Mbit/s" }
+        };
+
+        public override void Execute()
         {
             var client = new SpeedTestClient();
             var settings = client.GetSettings();
@@ -16,16 +24,26 @@ namespace NetSentinel.SpeedTest
 
             Console.WriteLine("Testing speed...");
 
-            var downloadSpeed = client.TestDownloadSpeed(bestServer, settings?.Download?.ThreadsPerUrl ?? 2);
+            var downloadSpeed = client.TestDownloadSpeed(bestServer, _maxMbit, settings?.Download?.ThreadsPerUrl ?? 2);
             PrintSpeed("Download", downloadSpeed);
 
             var uploadSpeed = client.TestUploadSpeed(bestServer, settings?.Upload?.ThreadsPerUrl ?? 2);
             PrintSpeed("Upload", uploadSpeed);
         }
 
-        public void Process(string[] arguments, ref int index)
+        public override void Process(string[] arguments, ref int index)
         {
-            // nothing to do
+            for (int i = 0; i < arguments.Length; i++)
+            {
+                switch (arguments[i])
+                {
+                    case "-max-mbit":
+                        _maxMbit = double.Parse(arguments[++i], CultureInfo.InvariantCulture);
+                        break;
+                    default:
+                        return;
+                }
+            }
         }
 
         private static Server SelectBestServer(IEnumerable<Server> servers)

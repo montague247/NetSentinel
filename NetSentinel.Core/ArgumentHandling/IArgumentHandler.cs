@@ -5,5 +5,7 @@ namespace NetSentinel.ArgumentHandling
         void Process(string[] arguments, ref int index);
 
         void Execute();
+
+        void GenerateHelp(int indent);
     }
 }

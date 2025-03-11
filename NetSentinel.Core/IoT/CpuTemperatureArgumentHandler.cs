@@ -27,5 +27,10 @@ namespace NetSentinel.IoT
         {
             // nothing to do
         }
+
+        public void GenerateHelp(int indent)
+        {
+            // nothing to do
+        }
     }
 }
