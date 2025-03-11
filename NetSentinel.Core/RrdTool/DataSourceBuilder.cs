@@ -12,7 +12,7 @@ namespace NetSentinel.RrdTool
 
         public DataSourceBuilder Name(string name)
         {
-            _name = name;
+            _name = name ?? throw new ArgumentNullException(nameof(name));
 
             return this;
         }
@@ -26,6 +26,9 @@ namespace NetSentinel.RrdTool
 
         public DataSourceBuilder Heartbeat(int heartbeat)
         {
+            if (heartbeat < 1)
+                throw new InvalidOperationException("Heartbeat must be greater than or equal to 1");
+
             _heartbeat = heartbeat.ToString(CultureInfo.InvariantCulture);
 
             return this;
@@ -33,7 +36,7 @@ namespace NetSentinel.RrdTool
 
         public DataSourceBuilder Heartbeat(string heartbeat)
         {
-            _heartbeat = heartbeat;
+            _heartbeat = heartbeat ?? throw new ArgumentNullException(nameof(heartbeat));
 
             return this;
         }
@@ -47,7 +50,7 @@ namespace NetSentinel.RrdTool
 
         public DataSourceBuilder Min(string min)
         {
-            _min = min;
+            _min = min ?? throw new ArgumentNullException(nameof(min));
 
             return this;
         }
@@ -61,7 +64,7 @@ namespace NetSentinel.RrdTool
 
         public DataSourceBuilder Max(string max)
         {
-            _max = max;
+            _max = max ?? throw new ArgumentNullException(nameof(max));
 
             return this;
         }

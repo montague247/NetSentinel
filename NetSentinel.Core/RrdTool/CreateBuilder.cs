@@ -1,30 +1,42 @@
+using System.Globalization;
+
 namespace NetSentinel.RrdTool
 {
     public sealed class CreateBuilder : ArgumentsBuilder
     {
         private string? _fileName;
-        private string? _startTime;
+        private string? _start;
         private string? _step;
         private List<DataSourceBuilder> _dataSources = [];
         private List<RoundRobinArchiveBuilder> _archives = [];
 
         public CreateBuilder FileName(string fileName)
         {
-            _fileName = fileName;
+            _fileName = fileName ?? throw new ArgumentNullException(nameof(fileName));
 
             return this;
         }
 
-        public CreateBuilder StartTime(string startTime)
+        public CreateBuilder Start(string start)
         {
-            _startTime = startTime;
+            _start = start ?? throw new ArgumentNullException(nameof(start));
+
+            return this;
+        }
+
+        public CreateBuilder Step(int step)
+        {
+            if (step < 1)
+                throw new InvalidOperationException("Step must be greater than or equal to 1");
+
+            _step = step.ToString(CultureInfo.InvariantCulture);
 
             return this;
         }
 
         public CreateBuilder Step(string step)
         {
-            _step = step;
+            _step = step ?? throw new ArgumentNullException(nameof(step));
 
             return this;
         }
@@ -57,7 +69,7 @@ namespace NetSentinel.RrdTool
                 throw new InvalidOperationException("FileName is required");
 
             Add(arguments, "create", _fileName);
-            Add(arguments, "-b", _startTime);
+            Add(arguments, "-b", _start);
             Add(arguments, "-s", _step);
 
             if (_dataSources.Count == 0)
