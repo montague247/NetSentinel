@@ -61,6 +61,8 @@ namespace NetSentinel.SpeedTest
 
             return TestSpeed(testData, async (client, url) =>
             {
+                Console.WriteLine($"Download url: {url}");
+
                 var data = await client.GetByteArrayAsync(url).ConfigureAwait(false);
                 return data.Length;
             }, simultaneousDownloads);
@@ -172,11 +174,7 @@ namespace NetSentinel.SpeedTest
             if (server.Url == null)
                 throw new InvalidOperationException("Server URL is null");
 
-            var uri = new Uri(new Uri(server.Url), ".").OriginalString + file;
-
-            Console.WriteLine(uri);
-
-            return uri;
+            return new Uri(new Uri(server.Url), ".").OriginalString + file;
         }
 
         private static IEnumerable<string> GenerateDownloadUrls(Server server, int retryCount)
