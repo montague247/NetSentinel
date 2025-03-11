@@ -24,9 +24,19 @@ namespace NetSentinel.RrdTool
             Execute(builder.Build());
         }
 
+        public static void Graph(Action<GraphBuilder> graph)
+        {
+            var builder = new GraphBuilder();
+            graph(builder);
+
+            Execute(builder.Build());
+        }
+
         private static void Execute(List<string> arguments)
         {
-            Console.WriteLine($"rrdtool {string.Join(" ", arguments)}");
+#if DEBUG
+            Console.Out.WriteLine($"rrdtool {string.Join(" ", arguments)}");
+#endif
 
             var psi = new ProcessStartInfo
             {
@@ -45,13 +55,22 @@ namespace NetSentinel.RrdTool
             var process = new Process { StartInfo = psi };
 
             process.Start();
-            process.WaitForExit();
+
+            var timeout = TimeSpan.FromMinutes(1);
+
+            if (!process.WaitForExit(timeout))
+            {
+                process.Close();
+                throw new InvalidOperationException($"RrdTool timeout after {timeout}");
+            }
 
             if (process.ExitCode != 0)
             {
                 var error = process.StandardError.ReadToEnd();
-                throw new InvalidOperationException($"RrdTool error: {error}");
+                throw new InvalidOperationException($"RrdTool error (Exit Code: {process.ExitCode}): {error}");
             }
+
+            Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
         }
     }
 }

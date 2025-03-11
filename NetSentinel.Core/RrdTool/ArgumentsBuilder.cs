@@ -10,5 +10,11 @@ namespace NetSentinel.RrdTool
                 arguments.Add(value);
             }
         }
+
+        protected static void Add(List<string> arguments, string name, bool value)
+        {
+            if (value)
+                arguments.Add(name);
+        }
     }
 }
