@@ -56,6 +56,12 @@ namespace NetSentinel.RrdTool
 
             process.Start();
 
+            // Starte paralleles Lesen von Standard-Output und Standard-Error
+            var outputTask = ReadStreamAsync(process.StandardOutput, Console.Out);
+            var errorTask = ReadStreamAsync(process.StandardError, Console.Error);
+
+            Task.WhenAll(outputTask, errorTask); // Warten auf beide Streams
+
             var timeout = TimeSpan.FromMinutes(1);
 
             if (!process.WaitForExit(timeout))
@@ -65,12 +71,17 @@ namespace NetSentinel.RrdTool
             }
 
             if (process.ExitCode != 0)
-            {
-                var error = process.StandardError.ReadToEnd();
-                throw new InvalidOperationException($"RrdTool error (Exit Code: {process.ExitCode}): {error}");
-            }
+                throw new InvalidOperationException($"RrdTool error (Exit Code: {process.ExitCode})");
+        }
 
-            Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
+        private static async Task ReadStreamAsync(StreamReader stream, TextWriter writer)
+        {
+            string? line;
+
+            while ((line = stream.ReadLine()) != null)
+            {
+                await writer.WriteLineAsync(line); // Sofortiges Schreiben in die Konsole
+            }
         }
     }
 }

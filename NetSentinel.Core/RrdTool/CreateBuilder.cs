@@ -7,8 +7,8 @@ namespace NetSentinel.RrdTool
         private string? _fileName;
         private string? _start;
         private string? _step;
-        private List<DataSourceBuilder> _dataSources = [];
-        private List<RoundRobinArchiveBuilder> _archives = [];
+        private readonly List<DataSourceBuilder> _dataSources = [];
+        private readonly List<RoundRobinArchiveBuilder> _archives = [];
 
         public CreateBuilder FileName(string fileName)
         {

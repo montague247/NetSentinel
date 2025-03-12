@@ -7,7 +7,7 @@ namespace NetSentinel.Core.Tests.RrdTool
         [Fact]
         public void CreateSimple()
         {
-            var fileName = Path.GetFullPath($"Simple.rrd");
+            var fileName = Path.GetFullPath("Simple.rrd");
 
             RrdToolExecute.Create(c => c.FileName(fileName));
 
@@ -17,14 +17,30 @@ namespace NetSentinel.Core.Tests.RrdTool
         [Fact]
         public void UpdateSimple()
         {
-            var fileName = Path.GetFullPath($"Simple.rrd");
+            var fileName = Path.GetFullPath("Simple.rrd");
 
             if (!File.Exists(fileName))
                 CreateSimple();
 
             RrdToolExecute.Update(u => u
                                     .FileName(fileName)
-                                    .Value(new Random().NextDouble() * 100)
+                                    .Value(Math.Round(new Random().NextDouble() * 100, 2))
+                                );
+
+            Assert.True(File.Exists(fileName));
+        }
+
+        [Fact]
+        public void GraphSimple()
+        {
+            UpdateSimple();
+
+            var fileName = Path.GetFullPath("Simple.rrd");
+
+            RrdToolExecute.Graph(g => g
+                                    .FileName($"{fileName}.png")
+                                    .Definition(fileName)
+                                    .Line(1, "dsv")
                                 );
 
             Assert.True(File.Exists(fileName));
