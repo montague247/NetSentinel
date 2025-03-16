@@ -65,9 +65,9 @@ if [ "$CURRENT_BUILD_REV" != "$LAST_BUILD_REV" ]; then
     echo "Update last build revision"
 
     build_release linux-arm64
-    build_release linux-x64
-    build_release win-arm64
-    build_release win-x64
+    #build_release linux-x64
+    #build_release win-arm64
+    #build_release win-x64
 
     echo "$CURRENT_BUILD_REV" > last_build_rev.txt
 fi
