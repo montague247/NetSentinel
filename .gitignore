@@ -1,6 +1,7 @@
 /Build
 /apt_installed_*.txt
 /brew_installed*.txt
+/last_build_rev.txt
 /NuGet.Config
 **/bin
 **/obj

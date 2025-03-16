@@ -49,11 +49,25 @@ fi
 ./update_dependencies.sh
 
 function build_release() {
-    echo "Build release for runtime $2 @ $(uname)"
-    dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$2" --self-contained true
+    echo "Build release for runtime $1 @ $(uname)"
+    dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$1" --self-contained true
 }
 
-build_release arm64 linux-arm64
-build_release x64 linux-x64
-build_release arm64 win-arm64
-build_release x64 win-x64
+CURRENT_BUILD_REV=$(git rev-parse HEAD)
+
+if [ -f "last_build_rev.txt" ]; then
+    LAST_BUILD_REV=$(cat last_build_rev.txt)
+else
+    LAST_BUILD_REV=""
+fi
+
+if [ "$CURRENT_BUILD_REV" != "$LAST_BUILD_REV" ]; then
+    echo "Update last build revision"
+
+    build_release linux-arm64
+    build_release linux-x64
+    build_release win-arm64
+    build_release win-x64
+
+    echo "$CURRENT_BUILD_REV" > last_build_rev.txt
+fi
