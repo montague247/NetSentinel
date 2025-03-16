@@ -11,7 +11,7 @@ namespace NetSentinel.SpeedTest
 
         protected override Dictionary<string, string> Help => new()
         {
-            { "-max-mbit", "Maximum speed in Mbit/s" }
+            { "--max-mbit", "Maximum speed in Mbit/s" }
         };
 
         public override void Execute()
@@ -33,16 +33,18 @@ namespace NetSentinel.SpeedTest
 
         public override void Process(string[] arguments, ref int index)
         {
-            for (int i = 0; i < arguments.Length; i++)
+            while (index < arguments.Length)
             {
-                switch (arguments[i])
+                switch (arguments[index])
                 {
-                    case "-max-mbit":
-                        _maxMbit = double.Parse(arguments[++i], CultureInfo.InvariantCulture);
+                    case "--max-mbit":
+                        _maxMbit = double.Parse(arguments[++index], CultureInfo.InvariantCulture);
                         break;
                     default:
                         return;
                 }
+
+                index++;
             }
         }
 
