@@ -34,8 +34,11 @@ namespace NetSentinel
             if (index >= arguments.Length)
                 return;
 
-            if (string.Compare(arguments[++index], "--verbose", StringComparison.Ordinal) == 0)
+            if (string.Compare(arguments[index], "--verbose", StringComparison.Ordinal) == 0)
+            {
+                index++;
                 _verbose = true;
+            }
 
             switch (arguments[index])
             {
@@ -56,7 +59,7 @@ namespace NetSentinel
         {
             var list = new List<string>();
 
-            for (int i = 0; i < arguments.Length; i++)
+            for (int i = index; i < arguments.Length; i++)
             {
                 list.Add(arguments[i]);
             }
