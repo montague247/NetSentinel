@@ -44,14 +44,16 @@ namespace NetSentinel
             {
                 case "--sudo":
                     _command = "sudo";
+                    index++;
                     break;
                 case "--bash":
                     _command = arguments[++index];
+                    index++;
                     break;
             }
 
-            _fileName = arguments[++index];
-            _arguments = CreateArguments(arguments, ++index);
+            _fileName = arguments[index++];
+            _arguments = CreateArguments(arguments, index);
             index = arguments.Length;
         }
 
