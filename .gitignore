@@ -1,4 +1,7 @@
 /Build
+/apt_installed_*.txt
+/brew_installed*.txt
+/NuGet.Config
 **/bin
 **/obj
 **/*.temp
