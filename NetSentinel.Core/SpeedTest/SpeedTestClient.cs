@@ -66,9 +66,8 @@ namespace NetSentinel.SpeedTest
 
             return TestSpeed(testData, async (client, url) =>
             {
-                Console.WriteLine($"Download url: {url}");
-
                 var data = await client.GetByteArrayAsync(url).ConfigureAwait(false);
+
                 return data.Length;
             }, simultaneousDownloads);
         }
