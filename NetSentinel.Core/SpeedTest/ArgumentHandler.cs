@@ -22,7 +22,7 @@ namespace NetSentinel.SpeedTest
             var servers = SelectServers(client, settings);
             var bestServer = SelectBestServer(servers);
 
-            Console.WriteLine("Testing speed...");
+            Console.WriteLine($"Testing speed with max {_maxMbit} Mbit...");
 
             var downloadSpeed = client.TestDownloadSpeed(bestServer, _maxMbit, settings?.Download?.ThreadsPerUrl ?? 2);
             PrintSpeed("Download", downloadSpeed);

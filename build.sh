@@ -50,7 +50,7 @@ fi
 
 function build_release() {
     echo "Build release for runtime $1 @ $(uname)"
-    dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$1"
+    dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$1" --self-contained true
 }
 
 build_release linux-x64
