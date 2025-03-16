@@ -48,11 +48,9 @@ fi
 
 ./update_dependencies.sh
 
-dotnet restore
-
 function build_release() {
     echo "Build release for runtime $2 @ $(uname)"
-    dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$2" --self-contained true --no-restore
+    dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$2" --self-contained true
 }
 
 build_release arm64 linux-arm64
