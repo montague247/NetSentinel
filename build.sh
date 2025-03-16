@@ -46,7 +46,7 @@ if [ -d .git ]; then
     git pull
 fi
 
-./update_dependencies.sh
+#./update_dependencies.sh
 
 function build_release() {
     echo "Build release for runtime $1 @ $(uname)"
