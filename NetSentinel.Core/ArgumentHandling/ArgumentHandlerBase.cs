@@ -1,3 +1,4 @@
+
 namespace NetSentinel.ArgumentHandling
 {
     public abstract class ArgumentHandlerBase : IArgumentHandler
@@ -6,7 +7,16 @@ namespace NetSentinel.ArgumentHandling
 
         public abstract void Execute();
 
-        public abstract void Process(string[] arguments, ref int index);
+        public virtual void Process(string[] arguments, ref int index)
+        {
+            while (index < arguments.Length)
+            {
+                if (!Process(arguments[index], arguments, ref index))
+                    return;
+
+                index++;
+            }
+        }
 
         public void GenerateHelp(int indent)
         {
@@ -16,6 +26,11 @@ namespace NetSentinel.ArgumentHandling
             {
                 Console.Out.WriteLine($"{space}{help.Key} > {help.Value}");
             }
+        }
+
+        protected virtual bool Process(string argument, string[] arguments, ref int index)
+        {
+            return false;
         }
     }
 }

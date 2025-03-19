@@ -31,20 +31,15 @@ namespace NetSentinel.SpeedTest
             PrintSpeed("Upload", uploadSpeed);
         }
 
-        public override void Process(string[] arguments, ref int index)
+        protected override bool Process(string argument, string[] arguments, ref int index)
         {
-            while (index < arguments.Length)
+            switch (argument)
             {
-                switch (arguments[index])
-                {
-                    case "--max-mbit":
-                        _maxMbit = double.Parse(arguments[++index], CultureInfo.InvariantCulture);
-                        break;
-                    default:
-                        return;
-                }
-
-                index++;
+                case "--max-mbit":
+                    _maxMbit = double.Parse(arguments[++index], CultureInfo.InvariantCulture);
+                    return true;
+                default:
+                    return false;
             }
         }
 

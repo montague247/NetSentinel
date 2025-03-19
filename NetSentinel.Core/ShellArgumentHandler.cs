@@ -29,19 +29,13 @@ namespace NetSentinel
                 Shell.BashExecute(_command, _fileName, _arguments, _verbose);
         }
 
-        public override void Process(string[] arguments, ref int index)
+        protected override bool Process(string argument, string[] arguments, ref int index)
         {
-            if (index >= arguments.Length)
-                return;
-
-            if (string.Compare(arguments[index], "--verbose", StringComparison.Ordinal) == 0)
+            switch (argument)
             {
-                index++;
-                _verbose = true;
-            }
-
-            switch (arguments[index])
-            {
+                case "--verbose":
+                    _verbose = true;
+                    return true;
                 case "--sudo":
                     _command = "sudo";
                     index++;
@@ -55,6 +49,10 @@ namespace NetSentinel
             _fileName = arguments[index++];
             _arguments = CreateArguments(arguments, index);
             index = arguments.Length;
+
+            // return false, because there is nothing else to process
+
+            return false;
         }
 
         private static List<string> CreateArguments(string[] arguments, int index)
