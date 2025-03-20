@@ -3,6 +3,7 @@
 /brew_installed*.txt
 /last_build_rev.txt
 /NuGet.Config
+/Release/**
 **/bin
 **/obj
 **/*.temp

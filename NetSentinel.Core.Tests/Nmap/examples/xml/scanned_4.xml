@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.93 scan initiated Sun Mar 16 19:06:56 2025 as: nmap -sn -oX /home/nspi/NetSentinel/scanned_4.xml 192.168.4.1/24 -->
+<nmaprun scanner="nmap" args="nmap -sn -oX /home/nspi/NetSentinel/scanned_4.xml 192.168.4.1/24" start="1742148416" startstr="Sun Mar 16 19:06:56 2025" version="7.93" xmloutputversion="1.05">
+<verbose level="0"/>
+<debugging level="0"/>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.1" addrtype="ipv4"/>
+<address addr="74:B6:B6:F5:5E:0D" addrtype="mac" vendor="eero"/>
+<hostnames>
+</hostnames>
+<times srtt="5767" rttvar="5767" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.24" addrtype="ipv4"/>
+<address addr="68:A4:0E:B7:9B:55" addrtype="mac" vendor="BSH Hausgerte GmbH"/>
+<hostnames>
+</hostnames>
+<times srtt="17877" rttvar="17877" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.26" addrtype="ipv4"/>
+<address addr="0C:EE:99:CF:36:BA" addrtype="mac" vendor="Amazon Technologies"/>
+<hostnames>
+</hostnames>
+<times srtt="150867" rttvar="103296" to="564051"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.35" addrtype="ipv4"/>
+<address addr="48:43:DD:89:BC:F7" addrtype="mac" vendor="Amazon Technologies"/>
+<hostnames>
+</hostnames>
+<times srtt="23278" rttvar="23278" to="116390"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.37" addrtype="ipv4"/>
+<address addr="34:AF:B3:35:5B:78" addrtype="mac" vendor="Amazon Technologies"/>
+<hostnames>
+</hostnames>
+<times srtt="200143" rttvar="200143" to="1000715"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.38" addrtype="ipv4"/>
+<address addr="5A:93:32:5A:43:CC" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<times srtt="194046" rttvar="194046" to="970230"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.39" addrtype="ipv4"/>
+<address addr="50:8B:B9:6C:91:CC" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<times srtt="26686" rttvar="26686" to="133430"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.40" addrtype="ipv4"/>
+<address addr="B8:AB:62:2E:5B:CC" addrtype="mac" vendor="Hui Zhou Gaoshengda Technology"/>
+<hostnames>
+</hostnames>
+<times srtt="93859" rttvar="73451" to="387663"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.42" addrtype="ipv4"/>
+<address addr="96:04:13:91:87:50" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<times srtt="168160" rttvar="168160" to="840800"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.43" addrtype="ipv4"/>
+<address addr="F6:DC:67:E1:3E:88" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<times srtt="195768" rttvar="195768" to="978840"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.46" addrtype="ipv4"/>
+<address addr="7A:61:60:10:CA:F3" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<times srtt="204525" rttvar="204525" to="1022625"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.69" addrtype="ipv4"/>
+<address addr="50:5A:65:F9:11:22" addrtype="mac" vendor="AzureWave Technologies"/>
+<hostnames>
+</hostnames>
+<times srtt="129080" rttvar="105353" to="550492"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.72" addrtype="ipv4"/>
+<address addr="64:97:14:A5:D3:CD" addrtype="mac" vendor="eero"/>
+<hostnames>
+</hostnames>
+<times srtt="6237" rttvar="6237" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.73" addrtype="ipv4"/>
+<address addr="64:97:14:EF:6B:8D" addrtype="mac" vendor="eero"/>
+<hostnames>
+</hostnames>
+<times srtt="17531" rttvar="17531" to="100000"/>
+</host>
+<host><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="192.168.4.74" addrtype="ipv4"/>
+<address addr="B0:19:21:B5:A0:EF" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<times srtt="1294251" rttvar="1475122" to="7194739"/>
+</host>
+<host><status state="up" reason="localhost-response" reason_ttl="0"/>
+<address addr="192.168.4.82" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+</host>
+<runstats><finished time="1742148425" timestr="Sun Mar 16 19:07:05 2025" summary="Nmap done at Sun Mar 16 19:07:05 2025; 256 IP addresses (16 hosts up) scanned in 9.07 seconds" elapsed="9.07" exit="success"/><hosts up="16" down="240" total="256"/>
+</runstats>
+</nmaprun>

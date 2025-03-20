@@ -23,10 +23,15 @@ function brew_install() {
     fi
 }
 
-if [ "$(uname)" == "Darwin" ]; then
+PLATFORM=$(uname)
+PLATFORM_LC=${PLATFORM,,}
+
+if [ "${PLATFORM_LC}" == "darwin" ]; then
     if [ ! -f "brew_installed.txt" ]; then
         echo "Install Homebrew"
+
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
         date > "brew_installed.txt"
     fi
 
@@ -34,7 +39,7 @@ if [ "$(uname)" == "Darwin" ]; then
     #brew_install rrdtool
     #brew_install nmap
 else
-    echo "Install tools for $(uname)"
+    echo "Install tools for ${PLATFORM}"
 
     apt_install git
     apt_install rrdtool
@@ -43,13 +48,15 @@ fi
 
 if [ -d .git ]; then
     echo "Update git repository"
+
     git pull
 fi
 
 #./update_dependencies.sh
 
 function build_release() {
-    echo "Build release for runtime $1 @ $(uname)"
+    echo "Build release for runtime $1 @ ${PLATFORM}"
+
     dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$1" --self-contained true
 }
 
@@ -62,12 +69,13 @@ else
 fi
 
 if [ "$CURRENT_BUILD_REV" != "$LAST_BUILD_REV" ]; then
-    echo "Update last build revision"
+    MACHINE_HARDWARE_NAME=$(uname -m)
 
-    build_release linux-arm64
-    #build_release linux-x64
-    #build_release win-arm64
-    #build_release win-x64
+    if [ "${MACHINE_HARDWARE_NAME}" == "aarch64" ]; then
+        MACHINE_HARDWARE_NAME=arm64
+    fi
+
+    build_release ${PLATFORM_LC}-${MACHINE_HARDWARE_NAME}
 
     echo "$CURRENT_BUILD_REV" > last_build_rev.txt
 fi
