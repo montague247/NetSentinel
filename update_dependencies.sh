@@ -10,6 +10,6 @@ fi
 
 echo "Upgrade outdated packages..."
 
-dotnet outdated -u NetSentinel.sln
+dotnet outdated -u
 
 echo "Finished"
