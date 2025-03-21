@@ -19,6 +19,8 @@ namespace NetSentinel.Nmap
             var outputPath = GetTempFile(Path.GetFullPath("."));
             var list = new List<string>(arguments)
             {
+                "--stats-every",
+                "1m",
                 "-oX",
                 outputPath
             };

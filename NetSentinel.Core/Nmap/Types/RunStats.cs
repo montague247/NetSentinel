@@ -5,10 +5,10 @@ namespace NetSentinel.Nmap.Types
     [XmlRoot("runstats")]
     public sealed class RunStats
     {
-        [XmlAttribute("finished")]
+        [XmlElement("finished")]
         public Finished? Finished { get; set; }
 
-        [XmlAttribute("hosts")]
+        [XmlElement("hosts")]
         public Hosts? Hosts { get; set; }
     }
 }

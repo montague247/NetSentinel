@@ -3,56 +3,66 @@
 <?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
 <!-- Nmap 7.93 scan initiated Sun Mar 16 19:06:52 2025 as: nmap -sn -oX /home/nspi/NetSentinel/scanned_2.xml 192.168.2.1/24 -->
 <nmaprun scanner="nmap" args="nmap -sn -oX /home/nspi/NetSentinel/scanned_2.xml 192.168.2.1/24" start="1742148412" startstr="Sun Mar 16 19:06:52 2025" version="7.93" xmloutputversion="1.05">
-<verbose level="0"/>
-<debugging level="0"/>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.1" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="7672" rttvar="7672" to="100000"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.64" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="21028" rttvar="21028" to="105140"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.72" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="13381" rttvar="13381" to="100000"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.75" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="13383" rttvar="13383" to="100000"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.191" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="21541" rttvar="21541" to="107705"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.198" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="32082" rttvar="32082" to="160410"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.213" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="26891" rttvar="21988" to="114843"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.218" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="11736" rttvar="11736" to="100000"/>
-</host>
-<runstats><finished time="1742148416" timestr="Sun Mar 16 19:06:56 2025" summary="Nmap done at Sun Mar 16 19:06:56 2025; 256 IP addresses (8 hosts up) scanned in 4.54 seconds" elapsed="4.54" exit="success"/><hosts up="8" down="248" total="256"/>
-</runstats>
+    <verbose level="0"/>
+    <debugging level="0"/>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.1" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="7672" rttvar="7672" to="100000"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.64" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="21028" rttvar="21028" to="105140"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.72" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="13381" rttvar="13381" to="100000"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.75" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="13383" rttvar="13383" to="100000"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.191" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="21541" rttvar="21541" to="107705"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.198" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="32082" rttvar="32082" to="160410"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.213" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="26891" rttvar="21988" to="114843"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.218" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="11736" rttvar="11736" to="100000"/>
+    </host>
+    <runstats>
+        <finished time="1742148416" timestr="Sun Mar 16 19:06:56 2025" summary="Nmap done at Sun Mar 16 19:06:56 2025; 256 IP addresses (8 hosts up) scanned in 4.54 seconds" elapsed="4.54" exit="success"/>
+        <hosts up="8" down="248" total="256"/>
+    </runstats>
 </nmaprun>

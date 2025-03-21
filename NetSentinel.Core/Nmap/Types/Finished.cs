@@ -12,7 +12,7 @@ namespace NetSentinel.Nmap.Types
         public string? TimeStr { get; set; }
 
         [XmlAttribute("elapsed")]
-        public decimal? Elapsed { get; set; }
+        public decimal Elapsed { get; set; }
 
         [XmlAttribute("summary")]
         public string? Summary { get; set; }

@@ -12,12 +12,12 @@ namespace NetSentinel.Nmap.Types
         public int Time { get; set; }
 
         [XmlAttribute("percent")]
-        public decimal? Percent { get; set; }
+        public decimal Percent { get; set; }
 
         [XmlAttribute("remaining")]
-        public int? Remaining { get; set; }
+        public int Remaining { get; set; }
 
         [XmlAttribute("etc")]
-        public int? Etc { get; set; }
+        public int Etc { get; set; }
     }
 }

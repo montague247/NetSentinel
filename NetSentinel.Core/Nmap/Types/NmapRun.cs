@@ -51,7 +51,7 @@ namespace NetSentinel.Nmap.Types
         public TaskBeginOrEnd? TaskEnd { get; set; }
 
         [XmlElement("host")]
-        public Host? Host { get; set; }
+        public Host[]? Host { get; set; }
 
         [XmlElement("runstats")]
         public RunStats? RunStats { get; set; }
