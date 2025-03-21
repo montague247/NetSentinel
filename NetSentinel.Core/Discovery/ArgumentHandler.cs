@@ -14,7 +14,7 @@ namespace NetSentinel.Discovery
         protected override Dictionary<string, string> Help => new()
         {
             { "--ip", "IP or IP range" },
-            { "--keep-temp-files", "Keeps all tempory files" }
+            { "--keep-temp-files", "Keeps all temporary files" }
         };
 
         public override void Execute()
