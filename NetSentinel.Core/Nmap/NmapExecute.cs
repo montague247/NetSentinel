@@ -1,4 +1,3 @@
-using System.Xml.Serialization;
 using NetSentinel.Discovery;
 using NetSentinel.Nmap.Types;
 using Serilog;
@@ -33,10 +32,7 @@ namespace NetSentinel.Nmap
             else
                 File.Delete(outputPath);
 
-            var xmlSerializer = new XmlSerializer(typeof(NmapRun));
-
-            using var reader = new StringReader(xml);
-            return (NmapRun?)xmlSerializer.Deserialize(reader);
+            return xml.FromXml<NmapRun>();
         }
 
         private static string GetTempFile(string path)

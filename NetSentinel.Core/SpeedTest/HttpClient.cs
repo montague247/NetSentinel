@@ -26,10 +26,8 @@ namespace NetSentinel.SpeedTest
         public async Task<T?> GetConfig<T>(string url)
         {
             var data = await GetStringAsync(AddTimeStamp(new Uri(url)));
-            var xmlSerializer = new XmlSerializer(typeof(T));
 
-            using var reader = new StringReader(data);
-            return (T?)xmlSerializer.Deserialize(reader);
+            return data.FromXml<T>();
         }
 
         private static Uri AddTimeStamp(Uri address)
