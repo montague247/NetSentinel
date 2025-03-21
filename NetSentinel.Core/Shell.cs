@@ -36,7 +36,7 @@ namespace NetSentinel
 
             Task.WhenAll(outputTask, errorTask);
 
-            var timeout = TimeSpan.FromMinutes(1);
+            var timeout = TimeSpan.FromMinutes(60);
 
             if (!process.WaitForExit(timeout))
             {
