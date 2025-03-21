@@ -21,7 +21,7 @@ namespace NetSentinel.Discovery
         {
             if (_ipRanges == null)
             {
-                NmapExecute.ArpPingScan("192.168.1.1/16", this);
+                NmapExecute.ArpPingScan("192.168.1.1/20", this);
 
                 return;
             }
