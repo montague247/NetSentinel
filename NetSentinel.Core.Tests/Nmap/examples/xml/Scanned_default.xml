@@ -3,99 +3,114 @@
 <?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
 <!-- Nmap 7.93 scan initiated Fri Mar 21 09:50:44 2025 as: nmap -sn -PR -&#45;stats-every 1m -oX /home/nspi/NetSentinel/nmap_2096639265.xml.temp 192.168.1.1/20 -->
 <nmaprun scanner="nmap" args="nmap -sn -PR -&#45;stats-every 1m -oX /home/nspi/NetSentinel/nmap_2096639265.xml.temp 192.168.1.1/20" start="1742547044" startstr="Fri Mar 21 09:50:44 2025" version="7.93" xmloutputversion="1.05">
-<verbose level="0"/>
-<debugging level="0"/>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.1" addrtype="ipv4"/>
-<hostnames>
-<hostname name="speedport.ip" type="PTR"/>
-</hostnames>
-<times srtt="10786" rttvar="8968" to="100000"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.64" addrtype="ipv4"/>
-<hostnames>
-<hostname name="amazon-3c05a5b3e" type="PTR"/>
-</hostnames>
-<times srtt="30551" rttvar="30551" to="152755"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.72" addrtype="ipv4"/>
-<hostnames>
-<hostname name="Paulmann-smik" type="PTR"/>
-</hostnames>
-<times srtt="19430" rttvar="19430" to="100000"/>
-</host>
-<host><status state="up" reason="reset" reason_ttl="127"/>
-<address addr="192.168.2.93" addrtype="ipv4"/>
-<hostnames>
-<hostname name="ANTB221979" type="PTR"/>
-</hostnames>
-<times srtt="53382" rttvar="53382" to="266910"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.198" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-<times srtt="28770" rttvar="24499" to="126766"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.203" addrtype="ipv4"/>
-<hostnames>
-<hostname name="BOSCH-WDU28512-68A40E65C7AB" type="PTR"/>
-</hostnames>
-<times srtt="38587" rttvar="38587" to="192935"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.213" addrtype="ipv4"/>
-<hostnames>
-<hostname name="amazon-badb9839d" type="PTR"/>
-</hostnames>
-<times srtt="35857" rttvar="31035" to="159997"/>
-</host>
-<host><status state="up" reason="echo-reply" reason_ttl="63"/>
-<address addr="192.168.2.218" addrtype="ipv4"/>
-<hostnames>
-<hostname name="H200" type="PTR"/>
-</hostnames>
-<times srtt="19707" rttvar="19707" to="100000"/>
-</host>
-<host><status state="up" reason="arp-response" reason_ttl="0"/>
-<address addr="192.168.4.1" addrtype="ipv4"/>
-<address addr="74:B6:B6:F5:5E:0D" addrtype="mac" vendor="eero"/>
-<hostnames>
-</hostnames>
-<times srtt="22468" rttvar="21896" to="110052"/>
-</host>
-<host><status state="up" reason="arp-response" reason_ttl="0"/>
-<address addr="192.168.4.24" addrtype="ipv4"/>
-<address addr="68:A4:0E:B7:9B:55" addrtype="mac" vendor="BSH Hausgerte GmbH"/>
-<hostnames>
-</hostnames>
-<times srtt="96193" rttvar="81805" to="423413"/>
-</host>
-<host><status state="up" reason="arp-response" reason_ttl="0"/>
-<address addr="192.168.4.26" addrtype="ipv4"/>
-<address addr="0C:EE:99:CF:36:BA" addrtype="mac" vendor="Amazon Technologies"/>
-<hostnames>
-</hostnames>
-<times srtt="12569" rttvar="9012" to="100000"/>
-</host>
-<host><status state="up" reason="arp-response" reason_ttl="0"/>
-<address addr="192.168.4.35" addrtype="ipv4"/>
-<address addr="48:43:DD:89:BC:F7" addrtype="mac" vendor="Amazon Technologies"/>
-<hostnames>
-</hostnames>
-<times srtt="106149" rttvar="39444" to="263925"/>
-</host>
-<host><status state="up" reason="localhost-response" reason_ttl="0"/>
-<address addr="192.168.4.82" addrtype="ipv4"/>
-<hostnames>
-</hostnames>
-</host>
-<taskprogress task="Ping Scan" time="1742547104" percent="17.05" remaining="171" etc="1742547274"/>
-<taskprogress task="Ping Scan" time="1742547164" percent="46.34" remaining="111" etc="1742547274"/>
-<taskprogress task="Ping Scan" time="1742547225" percent="75.89" remaining="50" etc="1742547275"/>
-<runstats><finished time="1742547273" timestr="Fri Mar 21 09:54:33 2025" summary="Nmap done at Fri Mar 21 09:54:33 2025; 4096 IP addresses (13 hosts up) scanned in 228.48 seconds" elapsed="228.48" exit="success"/><hosts up="13" down="4083" total="4096"/>
-</runstats>
+    <verbose level="0"/>
+    <debugging level="0"/>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.1" addrtype="ipv4"/>
+        <hostnames>
+            <hostname name="speedport.ip" type="PTR"/>
+        </hostnames>
+        <times srtt="10786" rttvar="8968" to="100000"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.64" addrtype="ipv4"/>
+        <hostnames>
+            <hostname name="amazon-3c05a5b3e" type="PTR"/>
+        </hostnames>
+        <times srtt="30551" rttvar="30551" to="152755"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.72" addrtype="ipv4"/>
+        <hostnames>
+            <hostname name="Paulmann-smik" type="PTR"/>
+        </hostnames>
+        <times srtt="19430" rttvar="19430" to="100000"/>
+    </host>
+    <host>
+        <status state="up" reason="reset" reason_ttl="127"/>
+        <address addr="192.168.2.93" addrtype="ipv4"/>
+        <hostnames>
+            <hostname name="ANTB221979" type="PTR"/>
+        </hostnames>
+        <times srtt="53382" rttvar="53382" to="266910"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.198" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="28770" rttvar="24499" to="126766"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.203" addrtype="ipv4"/>
+        <hostnames>
+            <hostname name="BOSCH-WDU28512-68A40E65C7AB" type="PTR"/>
+        </hostnames>
+        <times srtt="38587" rttvar="38587" to="192935"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.213" addrtype="ipv4"/>
+        <hostnames>
+            <hostname name="amazon-badb9839d" type="PTR"/>
+        </hostnames>
+        <times srtt="35857" rttvar="31035" to="159997"/>
+    </host>
+    <host>
+        <status state="up" reason="echo-reply" reason_ttl="63"/>
+        <address addr="192.168.2.218" addrtype="ipv4"/>
+        <hostnames>
+            <hostname name="H200" type="PTR"/>
+        </hostnames>
+        <times srtt="19707" rttvar="19707" to="100000"/>
+    </host>
+    <host>
+        <status state="up" reason="arp-response" reason_ttl="0"/>
+        <address addr="192.168.4.1" addrtype="ipv4"/>
+        <address addr="74:B6:B6:F5:5E:0D" addrtype="mac" vendor="eero"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="22468" rttvar="21896" to="110052"/>
+    </host>
+    <host>
+        <status state="up" reason="arp-response" reason_ttl="0"/>
+        <address addr="192.168.4.24" addrtype="ipv4"/>
+        <address addr="68:A4:0E:B7:9B:55" addrtype="mac" vendor="BSH Hausgerte GmbH"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="96193" rttvar="81805" to="423413"/>
+    </host>
+    <host>
+        <status state="up" reason="arp-response" reason_ttl="0"/>
+        <address addr="192.168.4.26" addrtype="ipv4"/>
+        <address addr="0C:EE:99:CF:36:BA" addrtype="mac" vendor="Amazon Technologies"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="12569" rttvar="9012" to="100000"/>
+    </host>
+    <host>
+        <status state="up" reason="arp-response" reason_ttl="0"/>
+        <address addr="192.168.4.35" addrtype="ipv4"/>
+        <address addr="48:43:DD:89:BC:F7" addrtype="mac" vendor="Amazon Technologies"/>
+        <hostnames>
+        </hostnames>
+        <times srtt="106149" rttvar="39444" to="263925"/>
+    </host>
+    <host>
+        <status state="up" reason="localhost-response" reason_ttl="0"/>
+        <address addr="192.168.4.82" addrtype="ipv4"/>
+        <hostnames>
+        </hostnames>
+    </host>
+    <taskprogress task="Ping Scan" time="1742547104" percent="17.05" remaining="171" etc="1742547274"/>
+    <taskprogress task="Ping Scan" time="1742547164" percent="46.34" remaining="111" etc="1742547274"/>
+    <taskprogress task="Ping Scan" time="1742547225" percent="75.89" remaining="50" etc="1742547275"/>
+    <runstats>
+        <finished time="1742547273" timestr="Fri Mar 21 09:54:33 2025" summary="Nmap done at Fri Mar 21 09:54:33 2025; 4096 IP addresses (13 hosts up) scanned in 228.48 seconds" elapsed="228.48" exit="success"/>
+        <hosts up="13" down="4083" total="4096"/>
+    </runstats>
 </nmaprun>
