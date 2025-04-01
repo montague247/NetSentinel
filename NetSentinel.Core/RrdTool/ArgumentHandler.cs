@@ -9,7 +9,7 @@ namespace NetSentinel.RrdTool
         private const string RrdFileName = $"{Name}.rrd";
         private const string GraphFileName = $"{Name}.png";
 
-        public void Execute()
+        public void Execute(IGlobalOptions options)
         {
             if (!File.Exists(RrdFileName))
             {

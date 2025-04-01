@@ -6,15 +6,18 @@ namespace NetSentinel
 {
     public static class ArgumentProcessor
     {
-        public static IArgumentHandler[] Process(params string[] arguments)
+        public static IArgumentHandler[] Process(out IGlobalOptions options, params string[] arguments)
         {
             var factory = new ArgumentHandlerFactory();
             var handlers = new List<IArgumentHandler>();
-            var index = 0;
+            var globalHandler = new GlobalArgumentHandler();
 
-            for (int i = 0; i < arguments.Length; i++)
+            for (int index = 0; index < arguments.Length; index++)
             {
-                var argument = arguments[i];
+                if (index == 0)
+                    globalHandler.Process(arguments, ref index);
+
+                var argument = arguments[index++];
                 var handler = factory.GetHandler(argument);
 
                 if (handler == null)
@@ -26,19 +29,20 @@ namespace NetSentinel
 
                 handlers.Add(handler);
 
-                index++;
                 handler.Process(arguments, ref index);
-                i = index - 1;
+                index--;
             }
+
+            options = globalHandler;
 
             return [.. handlers];
         }
 
-        public static void Execute(params IArgumentHandler[] handlers)
+        public static void Execute(IGlobalOptions options, params IArgumentHandler[] handlers)
         {
             foreach (var handler in handlers)
             {
-                handler.Execute();
+                handler.Execute(options);
             }
         }
 

@@ -5,9 +5,9 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
     
-var handlers = ArgumentProcessor.Process(args);
+var handlers = ArgumentProcessor.Process(out IGlobalOptions options, args);
 
 if (handlers.Length == 0)
     ArgumentProcessor.GenerateHelp();
 else
-    ArgumentProcessor.Execute(handlers);
+    ArgumentProcessor.Execute(options, handlers);

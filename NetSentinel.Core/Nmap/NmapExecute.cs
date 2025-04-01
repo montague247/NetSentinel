@@ -9,12 +9,12 @@ namespace NetSentinel.Nmap
     /// </summary>
     public static class NmapExecute
     {
-        public static NmapRun? ArpPingScan(string ipRange, IDiscoveryOptions options)
+        public static NmapRun? ArpPingScan(string ipRange, IDiscoveryOptions options, IGlobalOptions globalOptions)
         {
-            return Execute(options, "-sn", "-PR", ipRange);
+            return Execute(options, globalOptions, "-sn", "-PR", ipRange);
         }
 
-        private static NmapRun? Execute(IDiscoveryOptions options, params string[] arguments)
+        private static NmapRun? Execute(IDiscoveryOptions options, IGlobalOptions globalOptions, params string[] arguments)
         {
             var outputPath = GetTempFile(Path.GetFullPath("."));
             var list = new List<string>(arguments)
@@ -25,7 +25,7 @@ namespace NetSentinel.Nmap
                 outputPath
             };
 
-            Shell.SudoExecute("nmap", list);
+            Shell.SudoExecute("nmap", list, globalOptions);
 
             var xml = File.ReadAllText(outputPath);
 

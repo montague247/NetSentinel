@@ -14,7 +14,7 @@ namespace NetSentinel.SpeedTest
             { "--max-mbit", "Maximum speed in Mbit/s" }
         };
 
-        public override void Execute()
+        public override void Execute(IGlobalOptions options)
         {
             var client = new SpeedTestClient();
             var settings = client.GetSettings();

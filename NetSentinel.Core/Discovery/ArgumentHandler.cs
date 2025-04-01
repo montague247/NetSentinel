@@ -17,17 +17,17 @@ namespace NetSentinel.Discovery
             { "--keep-temp-files", "Keeps all temporary files" }
         };
 
-        public override void Execute()
+        public override void Execute(IGlobalOptions options)
         {
             if (_ipRanges == null)
             {
-                NmapExecute.ArpPingScan("192.168.1.1/20", this);
+                NmapExecute.ArpPingScan("192.168.1.1/20", this, options);
 
                 return;
             }
 
             foreach (var ipRange in _ipRanges)
-                NmapExecute.ArpPingScan(ipRange, this);
+                NmapExecute.ArpPingScan(ipRange, this, options);
         }
 
         protected override bool Process(string argument, string[] arguments, ref int index)

@@ -5,7 +5,7 @@ namespace NetSentinel
 {
     public static class Shell
     {
-        public static void Execute(string fileName, List<string> arguments, bool verbose = false)
+        public static void Execute(string fileName, List<string> arguments, bool verbose = false, bool shellExecute = false)
         {
             if (verbose)
                 Log.Information("Execute: {FileName} {Arguments}", fileName, string.Join(' ', arguments));
@@ -17,8 +17,8 @@ namespace NetSentinel
                 FileName = fileName,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
+                UseShellExecute = shellExecute,
+                CreateNoWindow = !shellExecute
             };
 
             foreach (var argument in arguments)
@@ -57,9 +57,17 @@ namespace NetSentinel
             Execute("/bin/bash", ["-c", string.Join(' ', bashArguments)], verbose);
         }
 
-        public static void SudoExecute(string fileName, List<string> arguments, bool verbose = false)
+        public static void SudoExecute(string fileName, List<string> arguments, IGlobalOptions options, bool verbose = false)
         {
-            BashExecute("sudo", fileName, arguments, verbose);
+            if (options.SudoAlternative)
+            {
+                var sudoArguments = new List<string> { fileName };
+                sudoArguments.AddRange(arguments);
+
+                Execute("sudo", sudoArguments, verbose);
+            }
+            else
+                BashExecute("sudo", fileName, arguments, verbose);
         }
 
         private static void ReadStreamAsync(StreamReader stream, bool error)

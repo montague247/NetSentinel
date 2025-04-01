@@ -6,7 +6,7 @@ namespace NetSentinel.IoT
     [ArgumentHandler("--cpu-temperature")]
     public sealed class CpuTemperatureArgumentHandler : IArgumentHandler
     {
-        public void Execute()
+        public void Execute(IGlobalOptions options)
         {
             var ct = new CpuTemperature();
 

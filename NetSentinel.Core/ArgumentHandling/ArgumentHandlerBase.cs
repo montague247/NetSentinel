@@ -5,7 +5,7 @@ namespace NetSentinel.ArgumentHandling
     {
         protected abstract Dictionary<string, string> Help { get; }
 
-        public abstract void Execute();
+        public abstract void Execute(IGlobalOptions options);
 
         public virtual void Process(string[] arguments, ref int index)
         {

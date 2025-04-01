@@ -17,7 +17,7 @@ namespace NetSentinel
             { "--bash", "Execute the followed command, fileName and arguments" }
         };
 
-        public override void Execute()
+        public override void Execute(IGlobalOptions options)
         {
             if (_fileName == null ||
                 _arguments == null)

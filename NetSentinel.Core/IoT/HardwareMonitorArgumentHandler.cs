@@ -6,7 +6,7 @@ namespace NetSentinel.IoT
     [ArgumentHandler("--hardware-monitor")]
     public sealed class HardwareMonitorArgumentHandler : IArgumentHandler
     {
-        public void Execute()
+        public void Execute(IGlobalOptions options)
         {
             var monitor = new OpenHardwareMonitor();
 
