@@ -17,8 +17,8 @@ jobs:
     steps:
     - name: Checkout repository and submodules
       uses: actions/checkout@v4
-    - name: Update git submodules
-      run: git submodule update --init --recursive
+    - name: Recursive init all git submodules
+      run: git submodule foreach --recursive git pull origin master
     - name: List contents of base directory
       run: ls -la .
     - name: Setup .NET
