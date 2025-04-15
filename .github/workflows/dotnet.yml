@@ -15,10 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Use SSH agent
+      uses: webfactory/ssh-agent@v0.9
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Update submodules
-      run: /usr/bin/git submodule update --init --verbose
+      with:
+        persist-credentials: false
+        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        submodules: recursive
     - name: List contents of base directory
       run: ls -la .
     - name: Setup .NET
