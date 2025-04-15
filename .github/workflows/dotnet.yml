@@ -18,7 +18,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Update submodules
-      run: git submodule update --init
+      run: git submodule update --init --verbose
     - name: List contents of base directory
       run: ls -la .
     - name: Setup .NET
