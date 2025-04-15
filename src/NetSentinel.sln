@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSentinel.Core", "NetSent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSentinel.Core.Tests", "NetSentinel.Core.Tests\NetSentinel.Core.Tests.csproj", "{CACDFC88-B1B7-4E6D-9BBD-945F0D1ACECC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charon.Core", "..\Charon\src\Charon.Core\Charon.Core.csproj", "{8A31EBB0-2B75-4F35-9EDE-016F19E5C3B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charon.Core.Tests", "..\Charon\src\Charon.Core.Tests\Charon.Core.Tests.csproj", "{0677F4E6-5C16-4D3A-8D45-FD7BF09DA625}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{CACDFC88-B1B7-4E6D-9BBD-945F0D1ACECC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CACDFC88-B1B7-4E6D-9BBD-945F0D1ACECC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CACDFC88-B1B7-4E6D-9BBD-945F0D1ACECC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A31EBB0-2B75-4F35-9EDE-016F19E5C3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A31EBB0-2B75-4F35-9EDE-016F19E5C3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A31EBB0-2B75-4F35-9EDE-016F19E5C3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A31EBB0-2B75-4F35-9EDE-016F19E5C3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0677F4E6-5C16-4D3A-8D45-FD7BF09DA625}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0677F4E6-5C16-4D3A-8D45-FD7BF09DA625}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0677F4E6-5C16-4D3A-8D45-FD7BF09DA625}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0677F4E6-5C16-4D3A-8D45-FD7BF09DA625}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -28,5 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetSentinel.Core\NetSentinel.Core.csproj" />
+    <ProjectReference Include="..\..\Charon\src\Charon.Core.Tests\Charon.Core.Tests.csproj" />
   </ItemGroup>
 </Project>

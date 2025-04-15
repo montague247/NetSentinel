@@ -1,10 +1,11 @@
+using Charon.Core.Tests;
 using NetSentinel.RrdTool;
 
 namespace NetSentinel.Core.Tests.RrdTool
 {
     public sealed class RrdToolExecuteTests
     {
-        [Fact]
+        [SkipOnContinuousIntegrationFact]
         public void CreateSimple()
         {
             var fileName = Path.GetFullPath("Simple.rrd");
@@ -14,7 +15,7 @@ namespace NetSentinel.Core.Tests.RrdTool
             Assert.True(File.Exists(fileName));
         }
 
-        [Fact]
+        [SkipOnContinuousIntegrationFact]
         public void UpdateSimple()
         {
             var fileName = Path.GetFullPath("Simple.rrd");
@@ -30,7 +31,7 @@ namespace NetSentinel.Core.Tests.RrdTool
             Assert.True(File.Exists(fileName));
         }
 
-        [Fact]
+        [SkipOnContinuousIntegrationFact]
         public void GraphSimple()
         {
             UpdateSimple();
@@ -46,7 +47,7 @@ namespace NetSentinel.Core.Tests.RrdTool
             Assert.True(File.Exists(fileName));
         }
 
-        [Fact]
+        [SkipOnContinuousIntegrationFact]
         public void Create4RoundRobinArchives()
         {
             var fileName = Path.GetFullPath("4RoundRobinArchives.rrd");
@@ -84,7 +85,7 @@ namespace NetSentinel.Core.Tests.RrdTool
             Assert.True(File.Exists(fileName));
         }
 
-        [Fact]
+        [SkipOnContinuousIntegrationFact]
         public void Create1MinuteDefault()
         {
             var fileName = Path.GetFullPath("1MinuteDefault.rrd");
