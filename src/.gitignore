@@ -1,0 +1,4 @@
+/NuGet.Config
+**/bin
+**/obj
+**/*.user

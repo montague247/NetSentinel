@@ -52,12 +52,12 @@ if [ -d .git ]; then
     git pull
 fi
 
-#./update_dependencies.sh
+#src/update_dependencies.sh
 
 function build_release() {
     echo "Build release for runtime $1 @ ${PLATFORM}"
 
-    dotnet build NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$1" --self-contained true
+    dotnet build src/NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$1" --self-contained true
 }
 
 CURRENT_BUILD_REV=$(git rev-parse HEAD)
