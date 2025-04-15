@@ -17,14 +17,10 @@ jobs:
     steps:
     - name: Checkout repository and submodules
       uses: actions/checkout@v4
-      with:
-        submodules: recursive
+    - name: Update git submodules
+      run: git submodule update --init --recursive
     - name: List contents of base directory
       run: ls -la .
-    - name: Show content of .gitmodules
-      run: cat .gitmodules
-    - name: List contents of src directory
-      run: ls -la src
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
