@@ -19,10 +19,12 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
-    - name: List contents of base
+    - name: List contents of base directory
       run: ls -la .
-    - name: List contents of NetSentinel
-      run: ls -la NetSentinel
+    - name: Show content of .gitmodules
+      run: cat .gitmodules
+    - name: List contents of src directory
+      run: ls -la src
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
