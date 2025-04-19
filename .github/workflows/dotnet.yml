@@ -15,15 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Use SSH agent
-      uses: webfactory/ssh-agent@v0.9.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    - name: Checkout repository
+    - name: Checkout repository with submodules
       uses: actions/checkout@v4
       with:
-        persist-credentials: false
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        token: ${{ secrets.GIT_CHARON_PAT }}
         submodules: recursive
     - name: List contents of base directory
       run: ls -la .
