@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Checkout repository with submodules
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
       with:
         token: ${{ secrets.GIT_CHARON_PAT }}
         submodules: recursive
