@@ -15,17 +15,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository and submodules
+    - name: Checkout Local repository
       uses: actions/checkout@v4
       with:
-        submodules: recursive
+        path: Local
+    - name: Checkout Charon repository
+      uses: actions/checkout@v4
+      with:
+        repository: montague247/Charon
+        token: ${{ secrets.GIT_CHARON_PAT }}
+        path: Charon   
+    - name: Link Charon
+      run: ln -s $(pwd)/Charon $(pwd)/Local/Charon
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore src
+      run: dotnet restore Local/src
     - name: Build
-      run: dotnet build src --no-restore
+      run: dotnet build Local/src --no-restore
     - name: Test
-      run: dotnet test src --no-build --verbosity normal
+      run: dotnet test Local/src --no-build --verbosity normal
