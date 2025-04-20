@@ -28,7 +28,7 @@ jobs:
     - name: Current path
       run: pwd
     - name: Link Charon
-      run: ln -s Charon Local/Charon
+      run: ln -s $(pwd)/Charon $(pwd)/Local/Charon
     - name: List contents of Local/Charon
       run: ls -la Local/Charon/
     - name: Setup .NET
