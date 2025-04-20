@@ -15,11 +15,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository with submodules
-      uses: actions/checkout@v2
+    - name: Checkout Charon repository
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GIT_CHARON_PAT }}
-        submodules: recursive
+        path: Charon
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        path: NetSentinel
     - name: List contents of base directory
       run: ls -la .
     - name: Setup .NET
