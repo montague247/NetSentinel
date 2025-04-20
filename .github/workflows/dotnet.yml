@@ -25,6 +25,8 @@ jobs:
       uses: actions/checkout@v4
       with:
         path: Local
+    - name: Current path
+      run: pwd
     - name: Link Charon
       run: ln -s Charon Local/Charon
     - name: List contents of Local/Charon
