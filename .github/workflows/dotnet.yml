@@ -34,8 +34,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore src
+      run: dotnet restore NetSentinel/src
     - name: Build
-      run: dotnet build src --no-restore
+      run: dotnet build NetSentinel/src --no-restore
     - name: Test
-      run: dotnet test src --no-build --verbosity normal
+      run: dotnet test NetSentinel/src --no-build --verbosity normal
