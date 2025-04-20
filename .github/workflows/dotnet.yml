@@ -18,6 +18,7 @@ jobs:
     - name: Checkout Charon repository
       uses: actions/checkout@v4
       with:
+        repository: montague247/Charon
         token: ${{ secrets.GIT_CHARON_PAT }}
         path: Charon
     - name: Checkout repository
