@@ -15,22 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout Local repository
+      uses: actions/checkout@v4
+      with:
+        path: Local
     - name: Checkout Charon repository
       uses: actions/checkout@v4
       with:
         repository: montague247/Charon
         token: ${{ secrets.GIT_CHARON_PAT }}
-        path: Charon
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        path: Local
-    - name: Current path
-      run: pwd
+        path: Charon   
     - name: Link Charon
       run: ln -s $(pwd)/Charon $(pwd)/Local/Charon
-    - name: List contents of Local/Charon
-      run: ls -la Local/Charon/
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
