@@ -24,18 +24,18 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        path: NetSentinel
+        path: Local
     - name: Link Charon
-      run: ln -s Charon NetSentinel/Charon
-    - name: List contents of NetSentinel/Charon
-      run: ls -la NetSentinel/Charon
+      run: ln -s Charon Local/Charon
+    - name: List contents of Local/Charon
+      run: ls -la Local/Charon/
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore NetSentinel/src
+      run: dotnet restore Local/src
     - name: Build
-      run: dotnet build NetSentinel/src --no-restore
+      run: dotnet build Local/src --no-restore
     - name: Test
-      run: dotnet test NetSentinel/src --no-build --verbosity normal
+      run: dotnet test Local/src --no-build --verbosity normal
