@@ -1,3 +1,5 @@
+using Charon.System;
+
 namespace NetSentinel.RrdTool
 {
     public static class RrdToolExecute
@@ -41,10 +43,10 @@ namespace NetSentinel.RrdTool
             Execute(builder.Build(), globalOptions);
         }
 
-        private static void Execute(List<string> arguments, IGlobalOptions globalOptions)
+        private static void Execute(List<string> arguments, IShellOptions shellOptions)
         {
-            if (globalOptions != null && !globalOptions.NoInstall)
-                Shell.CheckInstall("nmap", globalOptions);
+            if (shellOptions != null && !shellOptions.NoInstall)
+                Shell.CheckInstall("rrdtool", shellOptions);
 
             Shell.Execute("rrdtool", arguments);
         }

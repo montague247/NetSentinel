@@ -1,9 +1,8 @@
+using Charon.System;
+
 namespace NetSentinel
 {
-    public interface IGlobalOptions
+    public interface IGlobalOptions : IShellOptions
     {
-        bool SudoAlternative { get; }
-
-        bool NoInstall { get; }
     }
 }

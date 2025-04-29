@@ -1,3 +1,4 @@
+using Charon.System;
 using NetSentinel.Discovery;
 using NetSentinel.Nmap.Types;
 using Serilog;
@@ -9,14 +10,14 @@ namespace NetSentinel.Nmap
     /// </summary>
     public static class NmapExecute
     {
-        public static NmapRun? ArpPingScan(string ipRange, IDiscoveryOptions options, IGlobalOptions globalOptions)
+        public static NmapRun? ArpPingScan(string ipRange, IDiscoveryOptions options, IShellOptions shellOptions)
         {
-            return Execute(options, globalOptions, "-sn", "-PR", ipRange);
+            return Execute(options, shellOptions, "-sn", "-PR", ipRange);
         }
 
-        private static NmapRun? Execute(IDiscoveryOptions options, IGlobalOptions globalOptions, params string[] arguments)
+        private static NmapRun? Execute(IDiscoveryOptions options, IShellOptions shellOptions, params string[] arguments)
         {
-            CheckInstall(globalOptions);
+            CheckInstall(shellOptions);
 
             var outputPath = GetTempFile(Path.GetFullPath("."));
             var list = new List<string>(arguments)
@@ -27,7 +28,7 @@ namespace NetSentinel.Nmap
                 outputPath
             };
 
-            Shell.SudoExecute("nmap", list, globalOptions);
+            Shell.SudoExecute("nmap", list, shellOptions);
 
             var xml = File.ReadAllText(outputPath);
 
@@ -39,12 +40,12 @@ namespace NetSentinel.Nmap
             return xml.FromXml<NmapRun>();
         }
 
-        private static void CheckInstall(IGlobalOptions globalOptions)
+        private static void CheckInstall(IShellOptions shellOptions)
         {
-            if (globalOptions.NoInstall)
+            if (shellOptions.NoInstall)
                 return;
 
-            Shell.CheckInstall("nmap", globalOptions);
+            Shell.CheckInstall("nmap", shellOptions);
         }
 
         private static string GetTempFile(string path)

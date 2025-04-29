@@ -1,6 +1,7 @@
+using Charon.System;
 using NetSentinel.ArgumentHandling;
 
-namespace NetSentinel
+namespace NetSentinel.System
 {
     [ArgumentHandler("--shell")]
     public sealed class ShellArgumentHandler : ArgumentHandlerBase

@@ -1,11 +1,10 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Web;
-using System.Xml.Serialization;
 
 namespace NetSentinel.SpeedTest
 {
-    internal sealed class HttpClient : System.Net.Http.HttpClient
+    internal sealed class HttpClient : global::System.Net.Http.HttpClient
     {
         public HttpClient()
         {
