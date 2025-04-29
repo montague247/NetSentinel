@@ -53,14 +53,10 @@ if [ "${PLATFORM_LC}" == "darwin" ]; then
     fi
 
     #brew_install git
-    #brew_install rrdtool
-    #brew_install nmap
 else
     echo "Install tools for ${PLATFORM}"
 
     apt_install git
-    apt_install rrdtool
-    apt_install nmap
 fi
 
 if [ -d .git ]; then

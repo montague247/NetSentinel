@@ -5,7 +5,9 @@ namespace NetSentinel
 {
     public static class Shell
     {
-        public static void Execute(string fileName, List<string> arguments, bool verbose = false, bool shellExecute = false)
+        private static HashSet<string>? _installedTools;
+
+        public static int Execute(string fileName, List<string> arguments, bool verbose = false, bool shellExecute = false)
         {
             if (verbose)
                 Log.Information("Execute: {FileName} {Arguments}", fileName, string.Join(' ', arguments));
@@ -45,29 +47,49 @@ namespace NetSentinel
             }
 
             if (process.ExitCode != 0)
-                throw new InvalidOperationException($"{fileName} error (Exit Code: {process.ExitCode})");
+                Log.Error("{FileName} error (Exit Code: {ExitCode})", fileName, process.ExitCode);
+
+            return process.ExitCode;
         }
 
-        public static void BashExecute(string command, string fileName, List<string> arguments, bool verbose = false)
+        public static int BashExecute(string command, string fileName, List<string> arguments, bool verbose = false)
         {
             var bashArguments = new List<string> { command, fileName };
             bashArguments.AddRange(arguments);
 
             // Arguments = string.Format("-c \"sudo {0} {1} {2}\"", "/path/to/script", "arg1", arg2)
-            Execute("/bin/bash", ["-c", string.Join(' ', bashArguments)], verbose);
+            return Execute("/bin/bash", ["-c", string.Join(' ', bashArguments)], verbose);
         }
 
-        public static void SudoExecute(string fileName, List<string> arguments, IGlobalOptions options, bool verbose = false)
+        public static int SudoExecute(string fileName, List<string> arguments, IGlobalOptions options, bool verbose = false)
         {
             if (options.SudoAlternative)
             {
                 var sudoArguments = new List<string> { fileName };
                 sudoArguments.AddRange(arguments);
 
-                Execute("sudo", sudoArguments, verbose);
+                return Execute("sudo", sudoArguments, verbose);
             }
-            else
-                BashExecute("sudo", fileName, arguments, verbose);
+
+            return BashExecute("sudo", fileName, arguments, verbose);
+        }
+
+        public static void CheckInstall(string toolName, IGlobalOptions globalOptions)
+        {
+            if (globalOptions.NoInstall)
+                return;
+
+            _installedTools ??= [];
+
+            if (!_installedTools.Add(toolName))
+                return;
+
+            if (Execute("which", [toolName]) == 0)
+                return;
+
+            Log.Information("{Name} is not installed. Try to install it.", toolName);
+
+            SudoExecute("apt", ["install", toolName, "-y"], globalOptions);
         }
 
         private static void ReadStreamAsync(StreamReader stream, bool error)

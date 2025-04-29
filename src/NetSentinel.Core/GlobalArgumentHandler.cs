@@ -6,6 +6,8 @@ namespace NetSentinel
     {
         public bool SudoAlternative { get; private set; }
 
+        public bool NoInstall { get; private set; }
+
         protected override Dictionary<string, string> Help => new()
         {
             { "--sudo-alt", "Use sudo alternative" }
@@ -21,7 +23,10 @@ namespace NetSentinel
             switch (argument)
             {
                 case "--sudo-alt":
-                    SudoAlternative=true;
+                    SudoAlternative = true;
+                    return true;
+                case "--no-install":
+                    NoInstall = true;
                     return true;
                 default:
                     return false;

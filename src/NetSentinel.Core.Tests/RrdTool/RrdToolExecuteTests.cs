@@ -10,7 +10,7 @@ namespace NetSentinel.Core.Tests.RrdTool
         {
             var fileName = Path.GetFullPath("Simple.rrd");
 
-            RrdToolExecute.Create(c => c.FileName(fileName));
+            RrdToolExecute.Create(c => c.FileName(fileName), GlobalOptions.Instance);
 
             Assert.True(File.Exists(fileName));
         }
@@ -26,7 +26,7 @@ namespace NetSentinel.Core.Tests.RrdTool
             RrdToolExecute.Update(u => u
                                     .FileName(fileName)
                                     .Value(Math.Round(new Random().NextDouble() * 100, 2))
-                                );
+                                , GlobalOptions.Instance);
 
             Assert.True(File.Exists(fileName));
         }
@@ -42,7 +42,7 @@ namespace NetSentinel.Core.Tests.RrdTool
                                     .FileName($"{fileName}.png")
                                     .Definition(fileName)
                                     .Line(1, "dsv")
-                                );
+                                , GlobalOptions.Instance);
 
             Assert.True(File.Exists(fileName));
         }
@@ -80,7 +80,7 @@ namespace NetSentinel.Core.Tests.RrdTool
                                         .Steps("1d")
                                         .Rows("10y")
                                     )
-                                );
+                                , GlobalOptions.Instance);
 
             Assert.True(File.Exists(fileName));
         }
@@ -111,7 +111,7 @@ namespace NetSentinel.Core.Tests.RrdTool
                                         .Steps("1d")
                                         .Rows("10y")
                                     )
-                                );
+                                , GlobalOptions.Instance);
 
             Assert.True(File.Exists(fileName));
         }

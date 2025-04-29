@@ -9,7 +9,7 @@ namespace NetSentinel.RrdTool
         private const string RrdFileName = $"{Name}.rrd";
         private const string GraphFileName = $"{Name}.png";
 
-        public void Execute(IGlobalOptions options)
+        public void Execute(IGlobalOptions globalOptions)
         {
             if (!File.Exists(RrdFileName))
             {
@@ -23,7 +23,7 @@ namespace NetSentinel.RrdTool
                         .Min(0)
                         .Max(100)
                     )
-                );
+                , globalOptions);
             }
 
             var updateCount = 0;
@@ -36,7 +36,7 @@ namespace NetSentinel.RrdTool
                 RrdToolExecute.Update(u => u
                     .FileName(RrdFileName)
                     .Value(value)
-                );
+                , globalOptions);
 
                 if (++updateCount == 5)
                 {
@@ -51,7 +51,7 @@ namespace NetSentinel.RrdTool
                         .UpperLimit(100)
                         .Definition(RrdFileName)
                         .Line(1, "dsv")
-                    );
+                    , globalOptions);
                 }
 
                 Thread.Sleep(1000);

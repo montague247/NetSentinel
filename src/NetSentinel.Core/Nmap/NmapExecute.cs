@@ -16,6 +16,8 @@ namespace NetSentinel.Nmap
 
         private static NmapRun? Execute(IDiscoveryOptions options, IGlobalOptions globalOptions, params string[] arguments)
         {
+            CheckInstall(globalOptions);
+
             var outputPath = GetTempFile(Path.GetFullPath("."));
             var list = new List<string>(arguments)
             {
@@ -35,6 +37,14 @@ namespace NetSentinel.Nmap
                 File.Delete(outputPath);
 
             return xml.FromXml<NmapRun>();
+        }
+
+        private static void CheckInstall(IGlobalOptions globalOptions)
+        {
+            if (globalOptions.NoInstall)
+                return;
+
+            Shell.CheckInstall("nmap", globalOptions);
         }
 
         private static string GetTempFile(string path)
