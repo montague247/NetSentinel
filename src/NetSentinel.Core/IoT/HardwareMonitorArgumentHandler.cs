@@ -3,7 +3,7 @@ using NetSentinel.ArgumentHandling;
 
 namespace NetSentinel.IoT
 {
-    [ArgumentHandler("--hardware-monitor")]
+    [ArgumentHandler("--hardware-monitor", "Run hardware monitor test")]
     public sealed class HardwareMonitorArgumentHandler : IArgumentHandler
     {
         public void Execute(IGlobalOptions options)
@@ -35,11 +35,6 @@ namespace NetSentinel.IoT
         }
 
         public void Process(string[] arguments, ref int index)
-        {
-            // nothing to do
-        }
-
-        public void GenerateHelp(int indent)
         {
             // nothing to do
         }

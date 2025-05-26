@@ -3,30 +3,27 @@ using NetSentinel.Nmap;
 
 namespace NetSentinel.Discovery
 {
-    [ArgumentHandler("--discovery")]
+    [ArgumentHandler("--discovery", "Run discovery scan")]
     public sealed class ArgumentHandler : ArgumentHandlerBase, IDiscoveryOptions
     {
-        private List<string>? _ipRanges;
-        private bool _keepTempFiles;
+        [ArgumentHandlerProperty("--ip", "IP or IP range (comma-separated)")]
+        [ArgumentHandlerPropertyValue("ipOrRange", "192.168.1.1/20", "Default IP range for ARP ping scan")]
+        [ArgumentHandlerPropertyValue("ipOrRange", "192.168.4.1", "Alternative IP for ARP ping scan")]
+        public List<string>? IpRanges { get; private set; }
 
-        public bool KeepTempFiles => _keepTempFiles;
-
-        protected override Dictionary<string, string> Help => new()
-        {
-            { "--ip", "IP or IP range" },
-            { "--keep-temp-files", "Keeps all temporary files" }
-        };
+        [ArgumentHandlerProperty("--keep-temp-files", "Keeps all temporary files")]
+        public bool KeepTempFiles { get; private set; }
 
         public override void Execute(IGlobalOptions options)
         {
-            if (_ipRanges == null)
+            if (IpRanges == null)
             {
                 NmapExecute.ArpPingScan("192.168.1.1/20", this, options);
 
                 return;
             }
 
-            foreach (var ipRange in _ipRanges)
+            foreach (var ipRange in IpRanges)
                 NmapExecute.ArpPingScan(ipRange, this, options);
         }
 
@@ -35,11 +32,11 @@ namespace NetSentinel.Discovery
             switch (argument)
             {
                 case "--ip":
-                    _ipRanges ??= [];
-                    _ipRanges.AddRange(arguments[++index].Split(','));
+                    IpRanges ??= [];
+                    IpRanges.AddRange(arguments[++index].Split(','));
                     return true;
                 case "--keep-temp-files":
-                    _keepTempFiles = true;
+                    KeepTempFiles = true;
                     return true;
                 default:
                     return false;

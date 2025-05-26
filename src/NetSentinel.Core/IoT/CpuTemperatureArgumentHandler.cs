@@ -3,7 +3,7 @@ using NetSentinel.ArgumentHandling;
 
 namespace NetSentinel.IoT
 {
-    [ArgumentHandler("--cpu-temperature")]
+    [ArgumentHandler("--cpu-temperature", "Read CPU temperature")]
     public sealed class CpuTemperatureArgumentHandler : IArgumentHandler
     {
         public void Execute(IGlobalOptions options)

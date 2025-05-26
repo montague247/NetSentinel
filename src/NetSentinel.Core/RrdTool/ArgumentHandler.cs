@@ -2,7 +2,7 @@ using NetSentinel.ArgumentHandling;
 
 namespace NetSentinel.RrdTool
 {
-    [ArgumentHandler("--rrdtool-test")]
+    [ArgumentHandler("--rrdtool-test", "Run RRDTool test")]
     public sealed class ArgumentHandler : IArgumentHandler
     {
         private const string Name = "rrdtool-test";

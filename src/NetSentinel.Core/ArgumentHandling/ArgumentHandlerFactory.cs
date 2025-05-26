@@ -19,7 +19,7 @@ namespace NetSentinel.ArgumentHandling
                 if (attribute == null)
                     continue;
 
-                _handlers.Add(attribute.Name, type);
+                _handlers.Add(attribute.Name ?? string.Empty, type);
             }
         }
 

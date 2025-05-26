@@ -4,15 +4,13 @@ using NetSentinel.SpeedTest.Types;
 
 namespace NetSentinel.SpeedTest
 {
-    [ArgumentHandler("--speed-test")]
+    [ArgumentHandler("--speed-test", "Run speed test")]
     public sealed class ArgumentHandler : ArgumentHandlerBase
     {
-        private double _maxMbit = 1024;
-
-        protected override Dictionary<string, string> Help => new()
-        {
-            { "--max-mbit", "Maximum speed in Mbit/s" }
-        };
+        [ArgumentHandlerProperty("--max-mbit", "Maximum speed in Mbit/s")]
+        [ArgumentHandlerPropertyValue("1024", "Default maximum speed in Mbit/s")]
+        [ArgumentHandlerPropertyValue("200", "Alternative maximum speed in Mbit/s")]
+        public double MaxMBit { get; private set; } = 1024;
 
         public override void Execute(IGlobalOptions options)
         {
@@ -22,9 +20,9 @@ namespace NetSentinel.SpeedTest
             var servers = SelectServers(client, settings);
             var bestServer = SelectBestServer(servers);
 
-            Console.WriteLine($"Testing speed with max {_maxMbit} Mbit...");
+            Console.WriteLine($"Testing speed with max {MaxMBit} Mbit...");
 
-            var downloadSpeed = client.TestDownloadSpeed(bestServer, _maxMbit, settings?.Download?.ThreadsPerUrl ?? 2);
+            var downloadSpeed = client.TestDownloadSpeed(bestServer, MaxMBit, settings?.Download?.ThreadsPerUrl ?? 2);
             PrintSpeed("Download", downloadSpeed);
 
             var uploadSpeed = client.TestUploadSpeed(bestServer, settings?.Upload?.ThreadsPerUrl ?? 2);
@@ -36,7 +34,7 @@ namespace NetSentinel.SpeedTest
             switch (argument)
             {
                 case "--max-mbit":
-                    _maxMbit = double.Parse(arguments[++index], CultureInfo.InvariantCulture);
+                    MaxMBit = double.Parse(arguments[++index], CultureInfo.InvariantCulture);
                     return true;
                 default:
                     return false;

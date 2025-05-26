@@ -3,31 +3,31 @@ using NetSentinel.ArgumentHandling;
 
 namespace NetSentinel.System
 {
-    [ArgumentHandler("--shell")]
+    [ArgumentHandler("--shell", "Execute a shell command or script")]
     public sealed class ShellArgumentHandler : ArgumentHandlerBase
     {
-        private bool _verbose;
-        private string? _command;
-        private string? _fileName;
-        private List<string>? _arguments;
+        [ArgumentHandlerProperty("--verbose", "Enables verbose logging")]
+        public bool Verbose { get; private set; }
 
-        protected override Dictionary<string, string> Help => new()
-        {
-            { "--verbose", "Enables verbose logging" },
-            { "--sudo", "Execute the followed fileName and arguments as root" },
-            { "--bash", "Execute the followed command, fileName and arguments" }
-        };
+        [ArgumentHandlerProperty("--sudo", "Execute the followed fileName and arguments as root")]
+        [ArgumentHandlerProperty("--bash", "Execute the followed command, fileName and arguments")]
+        [ArgumentHandlerPropertyValue("command", "echo", "The command to execute in bash")]
+        public string? Command { get; private set; }
+
+        public string? FileName { get; private set; }
+
+        public List<string>? Arguments { get; private set; }
 
         public override void Execute(IGlobalOptions options)
         {
-            if (_fileName == null ||
-                _arguments == null)
+            if (FileName == null ||
+                Arguments == null)
                 return;
 
-            if (_command == null)
-                Shell.Execute(_fileName, _arguments, _verbose);
+            if (Command == null)
+                Shell.Execute(FileName, Arguments, Verbose);
             else
-                Shell.BashExecute(_command, _fileName, _arguments, _verbose);
+                Shell.BashExecute(Command, FileName, Arguments, Verbose);
         }
 
         protected override bool Process(string argument, string[] arguments, ref int index)
@@ -35,20 +35,20 @@ namespace NetSentinel.System
             switch (argument)
             {
                 case "--verbose":
-                    _verbose = true;
+                    Verbose = true;
                     return true;
                 case "--sudo":
-                    _command = "sudo";
+                    Command = "sudo";
                     index++;
                     break;
                 case "--bash":
-                    _command = arguments[++index];
+                    Command = arguments[++index];
                     index++;
                     break;
             }
 
-            _fileName = arguments[index++];
-            _arguments = CreateArguments(arguments, index);
+            FileName = arguments[index++];
+            Arguments = CreateArguments(arguments, index);
             index = arguments.Length;
 
             // return false, because there is nothing else to process

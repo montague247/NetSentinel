@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\NetSentinel.Core\NetSentinel.Core.csproj" />
+    <ProjectReference Include="..\..\Charon\src\Charon.Hosting\Charon.Hosting.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
