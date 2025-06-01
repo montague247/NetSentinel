@@ -27,9 +27,4 @@ public sealed class CpuTemperatureArgumentHandler : IArgumentHandler
     {
         // nothing to do
     }
-
-    public void GenerateHelp(int indent)
-    {
-        // nothing to do
-    }
 }
