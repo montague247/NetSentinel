@@ -11,7 +11,7 @@ public sealed class ConfigurationsTests
         var configurations = Configurations.Load(path);
 
         Assert.NotNull(configurations);
-        Assert.Null(configurations.Entries);
+        Assert.NotNull(configurations.Entries);
 
         var entry = configurations.GetEntry("Sample");
         Assert.Null(entry);
