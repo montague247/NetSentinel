@@ -1,5 +1,5 @@
 using System.Globalization;
-using NetSentinel.ArgumentHandling;
+using NetSentinel.Argument;
 using NetSentinel.SpeedTest.Types;
 
 namespace NetSentinel.SpeedTest

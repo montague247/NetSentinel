@@ -1,11 +1,10 @@
 using System.Xml.Serialization;
 
-namespace NetSentinel.Nmap.Types
+namespace NetSentinel.Nmap.Types;
+
+[XmlRoot("verbose")]
+public sealed class Verbose
 {
-    [XmlRoot("verbose")]
-    public sealed class Verbose
-    {
-        [XmlAttribute("level")]
-        public int Level { get; set; }
-    }
+    [XmlAttribute("level")]
+    public int Level { get; set; }
 }

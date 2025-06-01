@@ -1,7 +1,7 @@
 using System.Xml.Serialization;
 
-namespace NetSentinel.Nmap.Types
-{
+namespace NetSentinel.Nmap.Types;
+
     [XmlRoot("finished")]
     public sealed class Finished
     {
@@ -20,4 +20,3 @@ namespace NetSentinel.Nmap.Types
         [XmlAttribute("exit")]
         public string? Exit { get; set; }
     }
-}

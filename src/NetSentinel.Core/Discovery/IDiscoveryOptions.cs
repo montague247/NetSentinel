@@ -1,7 +1,6 @@
-namespace NetSentinel.Discovery
+namespace NetSentinel.Discovery;
+
+public interface IDiscoveryOptions
 {
-    public interface IDiscoveryOptions
-    {
-        bool KeepTempFiles { get; }
-    }
+    bool KeepTempFiles { get; }
 }

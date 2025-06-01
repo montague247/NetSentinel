@@ -1,7 +1,7 @@
 using System.Reflection;
 
-namespace NetSentinel.ArgumentHandling
-{
+namespace NetSentinel.Argument;
+
     public sealed class ArgumentHandlerFactory
     {
         private readonly Dictionary<string, Type> _handlers = [];
@@ -33,4 +33,3 @@ namespace NetSentinel.ArgumentHandling
             return default;
         }
     }
-}

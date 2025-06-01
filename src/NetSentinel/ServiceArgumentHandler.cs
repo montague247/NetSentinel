@@ -1,5 +1,5 @@
 using Charon.Hosting;
-using NetSentinel.ArgumentHandling;
+using NetSentinel.Argument;
 
 namespace NetSentinel;
 

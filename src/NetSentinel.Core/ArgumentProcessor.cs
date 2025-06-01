@@ -1,5 +1,5 @@
 using System.Reflection;
-using NetSentinel.ArgumentHandling;
+using NetSentinel.Argument;
 using Serilog;
 
 namespace NetSentinel;

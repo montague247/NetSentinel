@@ -1,4 +1,4 @@
-using NetSentinel.ArgumentHandling;
+using NetSentinel.Argument;
 
 namespace NetSentinel
 {

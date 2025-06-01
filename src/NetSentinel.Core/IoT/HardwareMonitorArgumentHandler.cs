@@ -1,42 +1,41 @@
 using Iot.Device.HardwareMonitor;
-using NetSentinel.ArgumentHandling;
+using NetSentinel.Argument;
 
-namespace NetSentinel.IoT
+namespace NetSentinel.IoT;
+
+[ArgumentHandler("--hardware-monitor", "Run hardware monitor test")]
+public sealed class HardwareMonitorArgumentHandler : IArgumentHandler
 {
-    [ArgumentHandler("--hardware-monitor", "Run hardware monitor test")]
-    public sealed class HardwareMonitorArgumentHandler : IArgumentHandler
+    public void Execute(IGlobalOptions options)
     {
-        public void Execute(IGlobalOptions options)
+        var monitor = new OpenHardwareMonitor();
+
+        var load = monitor.GetCpuLoad();
+        Console.WriteLine($"CPU load: {load:0.00} %");
+
+        if (monitor.TryGetAverageCpuTemperature(out var temperature))
+            Console.WriteLine($"Average CPU temperature: {temperature.DegreesCelsius:0.00} °C");
+        else
+            Console.WriteLine("CPU temperature reading is not available");
+
+        if (monitor.TryGetAverageGpuTemperature(out temperature))
+            Console.WriteLine($"Average GPU temperature: {temperature.DegreesCelsius:0.00} °C");
+        else
+            Console.WriteLine("GPU temperature reading is not available");
+
+        foreach (var item in monitor.GetHardwareComponents())
         {
-            var monitor = new OpenHardwareMonitor();
-
-            var load = monitor.GetCpuLoad();
-            Console.WriteLine($"CPU load: {load:0.00} %");
-
-            if (monitor.TryGetAverageCpuTemperature(out var temperature))
-                Console.WriteLine($"Average CPU temperature: {temperature.DegreesCelsius:0.00} °C");
-            else
-                Console.WriteLine("CPU temperature reading is not available");
-
-            if (monitor.TryGetAverageGpuTemperature(out temperature))
-                Console.WriteLine($"Average GPU temperature: {temperature.DegreesCelsius:0.00} °C");
-            else
-                Console.WriteLine("GPU temperature reading is not available");
-
-            foreach (var item in monitor.GetHardwareComponents())
-            {
-                Console.WriteLine($"Hardware component: {item.Name} ({item.Type}/{item.Identifier})");
-            }
-
-            foreach (var item in monitor.GetSensorList())
-            {
-                Console.WriteLine($"Sensor '{item.Name}': {item.Value:0.00} ({item.SensorType}/{item.Identifier})");
-            }
+            Console.WriteLine($"Hardware component: {item.Name} ({item.Type}/{item.Identifier})");
         }
 
-        public void Process(string[] arguments, ref int index)
+        foreach (var item in monitor.GetSensorList())
         {
-            // nothing to do
+            Console.WriteLine($"Sensor '{item.Name}': {item.Value:0.00} ({item.SensorType}/{item.Identifier})");
         }
+    }
+
+    public void Process(string[] arguments, ref int index)
+    {
+        // nothing to do
     }
 }
