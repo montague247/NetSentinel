@@ -33,6 +33,8 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore Local/src
+    - name: Sleep for 10 seconds
+      run: sleep 10s
     - name: Build
       run: dotnet build Local/src --no-restore
     - name: Test
