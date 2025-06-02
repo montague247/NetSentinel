@@ -33,8 +33,8 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore Local/src
-    - name: Sleep for 10 seconds
-      run: sleep 10s
+    - name: Check file usage
+      run: fuser Local/Charon/src/Charon.Core/bin/Debug/net9.0/Charon.Core.deps.json
     - name: Build
       run: dotnet build Local/src --no-restore
     - name: Test
