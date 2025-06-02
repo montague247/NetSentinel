@@ -33,9 +33,7 @@ jobs:
         dotnet-version: 9.0.x
     - name: Restore dependencies
       run: dotnet restore Local/src
-    - name: Check file usage
-      run: fuser Local/Charon/src/Charon.Core/bin/Debug/net9.0/Charon.Core.deps.json
     - name: Build
-      run: dotnet build Local/src --no-restore
+      run: dotnet build Local/src --no-restore /maxcpucount:1
     - name: Test
       run: dotnet test Local/src --no-build --verbosity normal
