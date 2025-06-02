@@ -34,6 +34,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore Local/src
     - name: Build
-      run: dotnet build Local/src --no-restore
+      run: dotnet build Local/src --no-restore /maxcpucount:1
     - name: Test
       run: dotnet test Local/src --no-build --verbosity normal
