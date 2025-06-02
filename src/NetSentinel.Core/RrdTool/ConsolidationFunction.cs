@@ -1,10 +1,9 @@
-namespace NetSentinel.RrdTool
+namespace NetSentinel.RrdTool;
+
+public enum ConsolidationFunction
 {
-    public enum ConsolidationFunction
-    {
-        Average,
-        Min,
-        Max,
-        Last
-    }
+    Average,
+    Min,
+    Max,
+    Last
 }

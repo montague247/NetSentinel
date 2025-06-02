@@ -1,49 +1,48 @@
 using System.Xml.Serialization;
 
-namespace NetSentinel.SpeedTest.Types
+namespace NetSentinel.SpeedTest.Types;
+
+[XmlRoot("server")]
+public sealed class Server
 {
-    [XmlRoot("server")]
-    public sealed class Server
+    private readonly Lazy<Coordinate> _geoCoordinate;
+
+    public Server()
     {
-        private readonly Lazy<Coordinate> _geoCoordinate;
+        // note: geo coordinate will not be recalculated on Latitude or Longitude change
+        _geoCoordinate = new Lazy<Coordinate>(() => new Coordinate(Latitude, Longitude));
+    }
 
-        public Server()
-        {
-            // note: geo coordinate will not be recalculated on Latitude or Longitude change
-            _geoCoordinate = new Lazy<Coordinate>(() => new Coordinate(Latitude, Longitude));
-        }
+    [XmlAttribute("id")]
+    public int Id { get; set; }
 
-        [XmlAttribute("id")]
-        public int Id { get; set; }
+    [XmlAttribute("name")]
+    public string? Name { get; set; }
 
-        [XmlAttribute("name")]
-        public string? Name { get; set; }
+    [XmlAttribute("country")]
+    public string? Country { get; set; }
 
-        [XmlAttribute("country")]
-        public string? Country { get; set; }
+    [XmlAttribute("sponsor")]
+    public string? Sponsor { get; set; }
 
-        [XmlAttribute("sponsor")]
-        public string? Sponsor { get; set; }
+    [XmlAttribute("host")]
+    public string? Host { get; set; }
 
-        [XmlAttribute("host")]
-        public string? Host { get; set; }
+    [XmlAttribute("url")]
+    public string? Url { get; set; }
 
-        [XmlAttribute("url")]
-        public string? Url { get; set; }
+    [XmlAttribute("lat")]
+    public double Latitude { get; set; }
 
-        [XmlAttribute("lat")]
-        public double Latitude { get; set; }
+    [XmlAttribute("lon")]
+    public double Longitude { get; set; }
 
-        [XmlAttribute("lon")]
-        public double Longitude { get; set; }
+    public double Distance { get; set; }
 
-        public double Distance { get; set; }
+    public int Latency { get; set; }
 
-        public int Latency { get; set; }
-
-        public Coordinate GeoCoordinate
-        {
-            get { return _geoCoordinate.Value; }
-        }
+    public Coordinate GeoCoordinate
+    {
+        get { return _geoCoordinate.Value; }
     }
 }

@@ -1,17 +1,16 @@
-namespace NetSentinel.RrdTool
+namespace NetSentinel.RrdTool;
+
+public enum ImageFormat
 {
-    public enum ImageFormat
-    {
-        Png,
-        Svg,
-        Eps,
-        Pdf,
-        Xml,
-        XmlEnum,
-        Json,
-        JsonTime,
-        Csv,
-        Tsv,
-        Ssv
-    }
+    Png,
+    Svg,
+    Eps,
+    Pdf,
+    Xml,
+    XmlEnum,
+    Json,
+    JsonTime,
+    Csv,
+    Tsv,
+    Ssv
 }

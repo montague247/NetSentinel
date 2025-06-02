@@ -1,32 +1,31 @@
 using System.Xml.Serialization;
 
-namespace NetSentinel.SpeedTest.Types
+namespace NetSentinel.SpeedTest.Types;
+
+[XmlRoot("upload")]
+public sealed class Upload
 {
-    [XmlRoot("upload")]
-    public sealed class Upload
-    {
-        [XmlAttribute("testlength")]
-        public int TestLength { get; set; }
+    [XmlAttribute("testlength")]
+    public int TestLength { get; set; }
 
-        [XmlAttribute("ratio")]
-        public int Ratio { get; set; }
+    [XmlAttribute("ratio")]
+    public int Ratio { get; set; }
 
-        [XmlAttribute("initialtest")]
-        public int InitialTest { get; set; }
+    [XmlAttribute("initialtest")]
+    public int InitialTest { get; set; }
 
-        [XmlAttribute("mintestsize")]
-        public string? MinTestSize { get; set; }
+    [XmlAttribute("mintestsize")]
+    public string? MinTestSize { get; set; }
 
-        [XmlAttribute("threads")]
-        public int Threads { get; set; }
+    [XmlAttribute("threads")]
+    public int Threads { get; set; }
 
-        [XmlAttribute("maxchunksize")]
-        public string? MaxChunkSize { get; set; }
+    [XmlAttribute("maxchunksize")]
+    public string? MaxChunkSize { get; set; }
 
-        [XmlAttribute("maxchunkcount")]
-        public string? MaxChunkCount { get; set; }
+    [XmlAttribute("maxchunkcount")]
+    public string? MaxChunkCount { get; set; }
 
-        [XmlAttribute("threadsperurl")]
-        public int ThreadsPerUrl { get; set; }
-    }
+    [XmlAttribute("threadsperurl")]
+    public int ThreadsPerUrl { get; set; }
 }

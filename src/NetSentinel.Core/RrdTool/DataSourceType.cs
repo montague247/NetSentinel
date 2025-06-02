@@ -1,7 +1,6 @@
-namespace NetSentinel.RrdTool
+namespace NetSentinel.RrdTool;
+
+public enum DataSourceType
 {
-    public enum DataSourceType
-    {
-        Gauge
-    }
+    Gauge
 }

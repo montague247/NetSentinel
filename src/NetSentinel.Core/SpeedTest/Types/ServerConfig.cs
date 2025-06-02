@@ -1,11 +1,10 @@
 using System.Xml.Serialization;
 
-namespace NetSentinel.SpeedTest.Types
+namespace NetSentinel.SpeedTest.Types;
+
+[XmlRoot("server-config")]
+public sealed class ServerConfig
 {
-    [XmlRoot("server-config")]
-    public sealed class ServerConfig
-    {
-        [XmlAttribute("ignoreids")]
-        public string? IgnoreIds { get; set; }
-    }
+    [XmlAttribute("ignoreids")]
+    public string? IgnoreIds { get; set; }
 }

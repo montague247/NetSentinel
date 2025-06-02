@@ -1,10 +1,9 @@
-namespace NetSentinel.RrdTool
+namespace NetSentinel.RrdTool;
+
+public enum TextAlign
 {
-    public enum TextAlign
-    {
-        Left,
-        Right,
-        Justified,
-        Center
-    }
+    Left,
+    Right,
+    Justified,
+    Center
 }
