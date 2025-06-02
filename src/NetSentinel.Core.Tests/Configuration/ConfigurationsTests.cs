@@ -12,6 +12,9 @@ public sealed class ConfigurationsTests
 
         Assert.NotNull(configurations);
         Assert.NotNull(configurations.Entries);
+        Assert.NotNull(configurations.Types);
+        Assert.Single(configurations.Types);
+        Assert.Contains("Sample", configurations.Types);
 
         var entry = configurations.GetEntry("Sample");
         Assert.Null(entry);
@@ -52,7 +55,7 @@ public sealed class ConfigurationsTests
         var entry = configurations.GetEntry(nameof(Sample));
         Assert.NotNull(entry);
         Assert.Equal(nameof(Sample), entry.Name);
-        Assert.Equal("NetSentinel.Core.Tests.Configuration.SampleConfiguration, NetSentinel.Core.Tests", entry.Type);
+        Assert.Equal("Sample", entry.Type);
         Assert.NotNull(entry.Scheduling);
 
         var configuration = entry.GetConfiguration<SampleConfiguration>();

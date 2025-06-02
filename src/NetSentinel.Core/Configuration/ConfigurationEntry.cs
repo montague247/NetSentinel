@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Charon;
@@ -27,7 +28,7 @@ public sealed class ConfigurationEntry
     public ConfigurationEntry SetConfiguration<T>(T configuration)
     {
         ConfigurationRaw = JsonSerializer.SerializeToElement(configuration);
-        Type = typeof(T).TypeName();
+        Type = typeof(T).GetCustomAttribute<ConfigurationAttribute>()?.Name ?? typeof(T).TypeName();
 
         return this;
     }

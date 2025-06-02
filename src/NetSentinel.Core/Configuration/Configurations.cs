@@ -1,3 +1,4 @@
+using System.Reflection;
 using Charon;
 using Charon.IO;
 
@@ -9,10 +10,14 @@ public sealed class Configurations
 
     public Dictionary<string, ConfigurationEntry> Entries { get; set; } = [];
 
+    public Dictionary<string, string> Types { get; set; } = [];
+
     public static Configurations Load(string path)
     {
         var config = JsonExtensions.FromFile<Configurations>(path, false) ?? new();
         config._path = path;
+
+        FillTypes(config.Types);
 
         return config;
     }
@@ -22,10 +27,12 @@ public sealed class Configurations
         if (Entries == null)
             return [];
 
+        var shortTypeName = typeof(T).GetCustomAttribute<ConfigurationAttribute>()?.Name;
         var typeName = typeof(T).TypeName();
 
         return Entries
-            .Where(x => string.Compare(x.Value.Type, typeName, StringComparison.OrdinalIgnoreCase) == 0)
+            .Where(x => string.Compare(x.Value.Type, shortTypeName, StringComparison.OrdinalIgnoreCase) == 0 ||
+                        string.Compare(x.Value.Type, typeName, StringComparison.OrdinalIgnoreCase) == 0)
             .Select(x => { x.Value.Name = x.Key; return x.Value; })
             .ToArray();
     }
@@ -62,5 +69,19 @@ public sealed class Configurations
         this.ToJson(tempPath);
 
         FileComparer.Move(tempPath, _path, cancellationToken);
+    }
+
+    private static void FillTypes(Dictionary<string, string> types)
+    {
+        var genericConfigurationHandlerType = typeof(IConfigurationHandler<>);
+
+        foreach (var type in genericConfigurationHandlerType.FindDerivedTypes())
+        {
+            var interfaceType = type.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == genericConfigurationHandlerType);
+            var genericArgument = interfaceType.GetGenericArguments().Single();
+            var attribute = genericArgument.GetCustomAttribute<ConfigurationAttribute>();
+
+            types.TryAdd(attribute?.Name ?? genericArgument.FullName!, genericArgument.TypeName()!);
+        }
     }
 }
