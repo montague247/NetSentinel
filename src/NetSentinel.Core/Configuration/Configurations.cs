@@ -15,11 +15,23 @@ public sealed class Configurations
     public static Configurations Load(string path)
     {
         var config = JsonExtensions.FromFile<Configurations>(path, false) ?? new();
+
         config._path = path;
 
         FillTypes(config.Types);
 
         return config;
+    }
+
+    public States LoadStates()
+    {
+        if (string.IsNullOrEmpty(_path))
+            throw new InvalidOperationException("Configuration path is not set.");
+
+        var idx = _path.LastIndexOf('.');
+        var path = _path.Insert(idx, "-state");
+
+        return States.Load(path);
     }
 
     public ConfigurationEntry[] GetEntries<T>()

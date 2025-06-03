@@ -12,9 +12,6 @@ public sealed class ConfigurationEntry
 
     public string? Type { get; set; }
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string? Ref { get; set; }
-
     public Scheduling? Scheduling { get; set; }
 
     [JsonPropertyName("configuration")]
