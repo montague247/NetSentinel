@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NetSentinel.Core\NetSentinel.Core.csproj" />
     <ProjectReference Include="..\..\Charon\src\Charon.Hosting\Charon.Hosting.csproj" />
+    <ProjectReference Include="..\NetSentinel.Automation\NetSentinel.Automation.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>
