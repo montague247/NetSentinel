@@ -98,7 +98,7 @@ function build_release() {
     dotnet build src/NetSentinel/NetSentinel.csproj -c Release -o "Release/$1" -r "$1" --self-contained true
 }
 
-CURRENT_BUILD_REV=$(git rev-parse HEAD)
+CURRENT_BUILD_REV="$(git rev-parse HEAD):$(git -C Charon rev-parse HEAD)"
 
 if [ -f "last_build_rev.txt" ]; then
     LAST_BUILD_REV=$(cat last_build_rev.txt)
