@@ -1,6 +1,5 @@
 using System.Runtime.InteropServices;
 using Charon;
-using Charon.Security;
 using Charon.System;
 using Serilog;
 
@@ -8,6 +7,8 @@ namespace NetSentinel.Automation;
 
 public static class ZigbeeGateway
 {
+    private const string AppPath = "/opt/zigbee2mqtt";
+
     public static void EnsureRaspBeeIIService(IShellOptions shellOptions)
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -34,6 +35,7 @@ public static class ZigbeeGateway
             Shell.CheckInstall(shellOptions, "git", "make", "g++", "libpcap-dev");
 
             EnsureZigbee2MQTTApp(shellOptions);
+            CreateZigbee2MQTTService(shellOptions);
         }
 
         Service.Start("zigbee2mqtt", shellOptions);
@@ -50,25 +52,23 @@ public static class ZigbeeGateway
 
     private static void EnsureZigbee2MQTTApp(IShellOptions shellOptions)
     {
-        var appPath = "/opt/zigbee2mqtt";
+        Log.Information("Ensuring Zigbee2MQTT application at {Path}", AppPath);
 
-        Log.Information("Ensuring Zigbee2MQTT application at {Path}", appPath);
-
-        if (Directory.Exists(appPath))
-            Shell.SudoExecute("git", appPath, ["pull", "https://github.com/Koenkk/zigbee2mqtt.git"], shellOptions);
+        if (Directory.Exists(AppPath))
+            Shell.SudoExecute("git", AppPath, ["pull", "https://github.com/Koenkk/zigbee2mqtt.git"], shellOptions);
         else
         {
-            Shell.SudoExecute("mkdir", [appPath], shellOptions);
-            Shell.SudoExecute("chown", ["-R", $"{Environment.UserName}:", appPath], shellOptions);
+            Shell.SudoExecute("mkdir", [AppPath], shellOptions);
+            Shell.SudoExecute("chown", ["-R", $"{Environment.UserName}:", AppPath], shellOptions);
             Shell.Execute("git", "/opt", ["clone", "--depth", "1", "https://github.com/Koenkk/zigbee2mqtt.git"]);
         }
 
         Log.Information("Install Zigbee2MQTT application");
 
-        Shell.Execute("pnpm", appPath, ["install", "--frozen-lockfile"]);
+        Shell.Execute("pnpm", AppPath, ["install", "--frozen-lockfile"]);
 
         var tempConfigurationPath = Path.GetFullPath("Zigbee2MQTT-configuration.yaml");
-        var configurationPath = Path.Combine(appPath, "data", "configuration.yaml");
+        var configurationPath = Path.Combine(AppPath, "data", "configuration.yaml");
 
         if (File.Exists(tempConfigurationPath))
             Log.Information("Zigbee2MQTT configuration already exists at {Path}", configurationPath);
@@ -121,5 +121,34 @@ advanced:
 
             Log.Information("Zigbee2MQTT configuration created successfully at {Path}", configurationPath);
         }
+    }
+
+    private static void CreateZigbee2MQTTService(IShellOptions shellOptions)
+    {
+        var tempPath = Path.GetFullPath("zigbee2mqtt.service");
+
+File.WriteAllText(tempPath, $@"[Unit]
+Description=zigbee2mqtt
+After=network.target
+
+[Service]
+Environment=NODE_ENV=production
+Type=notify
+ExecStart=/usr/bin/node index.js
+WorkingDirectory={AppPath}
+StandardOutput=inherit
+# Or use StandardOutput=null if you don't want Zigbee2MQTT messages filling syslog, for more options see systemd.exec(5)
+StandardError=inherit
+WatchdogSec=10s
+Restart=always
+RestartSec=10s
+User=pi
+
+[Install]
+WantedBy=multi-user.target");
+
+        var path = Path.Combine("etc", "systemd", "system", "zigbee2mqtt.service");
+
+        Shell.SudoExecute("cp", [tempPath, path], shellOptions);
     }
 }
