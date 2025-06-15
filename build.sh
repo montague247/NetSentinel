@@ -87,7 +87,7 @@ if [ -d .git ]; then
     fi
 
     git pull --recurse-submodules --jobs=10
-    git submodule update --recursive
+    git -C Charon pull
 fi
 
 #src/update_dependencies.sh
