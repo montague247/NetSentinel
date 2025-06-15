@@ -17,7 +17,20 @@ public static class ZigbeeGateway
             throw new PlatformNotSupportedException("RaspBee II service is not supported on macOS.");
 
         if (!shellOptions.NoInstall)
+        {
+            Shell.BashExecute("wget -O - http://phoscon.de/apt/deconz.pub.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/deconz.gpg > /dev/null");
+            var parts = Shell.GetOutput("lsb_release", ["-cs"]).GetAwaiter().GetResult()?.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+
+            if (parts == null || parts.Length == 0)
+                throw new InvalidOperationException("Failed to determine distribution codename.");
+
+            var codename = parts[^1];
+            var repoLine = $"deb http://phoscon.de/apt/deconz {codename} main";
+
+            Shell.BashExecute($"echo \"{repoLine}\" | sudo tee /etc/apt/sources.list.d/deconz.list");
+
             Shell.CheckInstall(shellOptions, "libusb-1.0-0-dev", "libudev-dev", "deconz");
+        }
 
         Service.Start("deconz", shellOptions);
     }
@@ -127,7 +140,7 @@ advanced:
     {
         var tempPath = Path.GetFullPath("zigbee2mqtt.service");
 
-File.WriteAllText(tempPath, $@"[Unit]
+        File.WriteAllText(tempPath, $@"[Unit]
 Description=zigbee2mqtt
 After=network.target
 
