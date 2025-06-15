@@ -9,9 +9,9 @@ public sealed class CpuUsageArgumentHandler : ArgumentHandlerBase
 {
     public override void Execute(IGlobalOptions options)
     {
-        var cpuUsage = SystemInfo.GetCpuUsage();
+        var cpuUsage = SystemInfo.GetCpuUsage().GetAwaiter().GetResult();
 
-        Log.Information("CPU usage: {CpuUsage}%", cpuUsage);
+        Log.Information("CPU usage: user={CpuUsageUser}%, system={CpuUsageSystem}%", cpuUsage.User, cpuUsage.System);
     }
 
     protected override bool Process(string argument, string[] arguments, ref int index)
