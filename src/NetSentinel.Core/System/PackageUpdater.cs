@@ -47,13 +47,9 @@ public static class PackageUpdater
         Log.Information("System packages updated successfully after {Duration}", DateTime.UtcNow - startedUtc);
 
         // Check if the system needs a reboot
-        if (Shell.Execute("test", ["-f", "/var/run/reboot-required"]) == 0)
-        {
+        if (Shell.Execute("test", ["-f", "/var/run/reboot-required"], logFailed: false) == 0)
             Log.Warning("A reboot is required to complete the updates. Please reboot your system.");
-        }
         else
-        {
             Log.Information("No reboot is required after the updates.");
-        }
     }
 }
