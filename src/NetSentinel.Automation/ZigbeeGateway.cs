@@ -45,7 +45,8 @@ public static class ZigbeeGateway
         if (!shellOptions.NoInstall)
         {
             Shell.EnsureNodeJS(shellOptions);
-            Shell.CheckInstall(shellOptions, "git", "make", "g++", "libpcap-dev");
+            Shell.CheckInstall(shellOptions, "nodejs", "git", "make", "g++", "gcc", "libsystemd-dev");
+            Shell.SudoExecute("corepack", ["enable"], shellOptions);
 
             EnsureZigbee2MQTTApp(shellOptions);
             CreateZigbee2MQTTService(shellOptions);
@@ -78,7 +79,10 @@ public static class ZigbeeGateway
 
         Log.Information("Install Zigbee2MQTT application");
 
-        Shell.Execute("pnpm", AppPath, ["install", "--frozen-lockfile"]);
+        Shell.Execute("pnpm", AppPath, ["install", "--frozen-lockfile"], environmentVariables: new Dictionary<string, string>
+        {
+            ["CI"] = "true"
+        });
 
         var tempConfigurationPath = Path.GetFullPath("Zigbee2MQTT-configuration.yaml");
         var configurationPath = Path.Combine(AppPath, "data", "configuration.yaml");
