@@ -29,7 +29,7 @@ public static class PackageUpdater
         Shell.SudoExecute(AptCommand, ["update"], options);
 
         Log.Information("List upgradable packages");
-        Shell.Execute("apt", ["list", "--upgradable"]);
+        Shell.BashExecute([AptCommand, "-s", "upgrade", "|", "grep", "'^Inst'"]);
 
         Log.Information("Upgrade packages");
         Shell.SudoExecute(AptCommand, ["upgrade", "-y"], options);
@@ -49,7 +49,7 @@ public static class PackageUpdater
         Log.Information("System packages updated successfully after {Duration}", DateTime.UtcNow - startedUtc);
 
         // Check if the system needs a reboot
-        if (Shell.Execute("test", ["-f", "/var/run/reboot-required"], logFailed: false) == 0)
+        if (Shell.Execute("test", ["-f", "/var/run/reboot-required"]) == 0)
             Log.Warning("A reboot is required to complete the updates. Please reboot your system.");
         else
             Log.Information("No reboot is required after the updates.");
