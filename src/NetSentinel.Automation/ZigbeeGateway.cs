@@ -55,13 +55,17 @@ public static class ZigbeeGateway
         Log.Information("Ensuring Zigbee2MQTT application at {Path}", appPath);
 
         if (Directory.Exists(appPath))
-            Shell.SudoExecute("git", "/opt", ["update", "https://github.com/Koenkk/zigbee2mqtt.git"], shellOptions);
+            Shell.SudoExecute("git", appPath, ["pull", "https://github.com/Koenkk/zigbee2mqtt.git"], shellOptions);
         else
-            Shell.SudoExecute("git", "/opt", ["clone", "https://github.com/Koenkk/zigbee2mqtt.git"], shellOptions);
+        {
+            Shell.SudoExecute("mkdir", [appPath], shellOptions);
+            Shell.SudoExecute("chown", ["-R", $"{Environment.UserName}:", appPath], shellOptions);
+            Shell.Execute("git", "/opt", ["clone", "--depth", "1", "https://github.com/Koenkk/zigbee2mqtt.git"]);
+        }
 
-        Log.Information("Zigbee2MQTT application ensured at {Path}", appPath);
+        Log.Information("Install Zigbee2MQTT application");
 
-        Shell.Execute("npm", appPath, ["ci"]);
+        Shell.Execute("pnpm", appPath, ["install", "--frozen-lockfile"]);
 
         var tempConfigurationPath = Path.GetFullPath("Zigbee2MQTT-configuration.yaml");
         var configurationPath = Path.Combine(appPath, "data", "configuration.yaml");
