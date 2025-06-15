@@ -7,15 +7,20 @@ namespace NetSentinel.System
     {
         public void Execute(PackageUpdateConfiguration configuration)
         {
-            if (configuration.Packages != null && configuration.Packages.Length > 0)
-            {
-                foreach (var package in configuration.Packages)
-                {
-                    Shell.CheckInstall(configuration, package);
-                }
-            }
-
             PackageUpdater.Execute(configuration);
+
+            CheckInstall(configuration, configuration.Packages);
+        }
+
+        private static void CheckInstall(IShellOptions options, string[]? packages)
+        {
+            if (packages == null)
+                return;
+
+            foreach (var package in packages)
+            {
+                Shell.CheckInstall(options, package);
+            }
         }
     }
 }
