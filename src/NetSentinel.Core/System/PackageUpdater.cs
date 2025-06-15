@@ -5,8 +5,6 @@ namespace NetSentinel.System;
 
 public static class PackageUpdater
 {
-    private const string AptCommand = "apt-get";
-
     public static void Execute(IShellOptions options)
     {
         // Check if the system is running on a Debian-based distribution
@@ -26,25 +24,25 @@ public static class PackageUpdater
         var startedUtc = DateTime.UtcNow;
 
         Log.Information("Ensure that the necessary tools are installed");
-        Shell.SudoExecute(AptCommand, ["update"], options);
+        Shell.SudoExecute(Shell.AptGetCommand, ["update"], options);
 
         Log.Information("List upgradable packages");
-        Shell.BashExecute([AptCommand, "-s", "upgrade", "|", "grep", "'^Inst'"]);
+        Shell.BashExecute([Shell.AptGetCommand, "-s", "upgrade", "|", "grep", "'^Inst'"]);
 
         Log.Information("Upgrade packages");
-        Shell.SudoExecute(AptCommand, ["upgrade", "-y"], options);
+        Shell.SudoExecute(Shell.AptGetCommand, ["upgrade", "-y"], options);
 
         Log.Information("Perform a full distribution upgrade");
-        Shell.SudoExecute(AptCommand, ["dist-upgrade", "-y"], options);
+        Shell.SudoExecute(Shell.AptGetCommand, ["dist-upgrade", "-y"], options);
 
         Log.Information("Remove unused packages and clean up");
-        Shell.SudoExecute(AptCommand, ["autoremove", "-y"], options);
+        Shell.SudoExecute(Shell.AptGetCommand, ["autoremove", "-y"], options);
 
         Log.Information("Clean up package cache");
-        Shell.SudoExecute(AptCommand, ["autoclean"], options);
+        Shell.SudoExecute(Shell.AptGetCommand, ["autoclean"], options);
 
         Log.Information("Clean up any residual package files");
-        Shell.SudoExecute(AptCommand, ["clean"], options);
+        Shell.SudoExecute(Shell.AptGetCommand, ["clean"], options);
 
         Log.Information("System packages updated successfully after {Duration}", DateTime.UtcNow - startedUtc);
 
