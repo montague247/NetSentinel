@@ -29,7 +29,7 @@ public static class PackageUpdater
         Shell.SudoExecute(AptCommand, ["update"], options);
 
         Log.Information("List upgradable packages");
-        Shell.Execute(AptCommand, ["list", "--upgradable"]);
+        Shell.Execute("apt", ["list", "--upgradable"]);
 
         Log.Information("Upgrade packages");
         Shell.SudoExecute(AptCommand, ["upgrade", "-y"], options);
