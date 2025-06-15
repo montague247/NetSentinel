@@ -17,11 +17,23 @@ set -u
 # This is causing it to fail
 set -o pipefail
 
+SDK_VERSION="9.0"
+DAYS_OLD=28
+
+if [ -n "$(find dotnet-install.sh -mtime +${DAYS_OLD})" ]; then
+    echo "dotnet-install.sh is older than ${DAYS_OLD} days, removing it"
+    # Remove the old dotnet-install.sh script
+    rm dotnet-install.sh
+fi
+
+# Check if dotnet-install.sh exists, if not download it
 if [ ! -f dotnet-install.sh ]; then
     wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
     chmod +x ./dotnet-install.sh
 
-    ./dotnet-install.sh --version 9.0
+    # Install .NET SDK
+    echo "Installing .NET SDK ${SDK_VERSION}"
+    ./dotnet-install.sh --version ${SDK_VERSION}
     dotnet --version
     dotnet --list-runtimes
     dotnet --list-sdks
