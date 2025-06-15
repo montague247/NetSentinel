@@ -15,8 +15,5 @@ public abstract class ArgumentHandlerBase : IArgumentHandler
         }
     }
 
-    protected virtual bool Process(string argument, string[] arguments, ref int index)
-    {
-        return false;
-    }
+    protected abstract bool Process(string argument, string[] arguments, ref int index);
 }
