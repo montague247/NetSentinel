@@ -29,11 +29,14 @@ fi
 # Check if dotnet-install.sh exists, if not download it
 if [ ! -f dotnet-install.sh ]; then
     wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+    # Ensure the timestamp is up to date
+    touch dotnet-install.sh
+    # Make the script executable
     chmod +x ./dotnet-install.sh
 
     # Install .NET SDK
     echo "Installing .NET SDK ${SDK_VERSION}"
-    ./dotnet-install.sh --version ${SDK_VERSION}
+    ./dotnet-install.sh --channel STS --version ${SDK_VERSION}
     dotnet --version
     dotnet --list-runtimes
     dotnet --list-sdks
