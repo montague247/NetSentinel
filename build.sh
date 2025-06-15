@@ -62,7 +62,14 @@ fi
 if [ -d .git ]; then
     echo "Update git repository"
 
-    git pull
+    if [ ! -d Charon ]; then
+        echo "Clone Charon submodule"
+        git clone git@github.com:montague247/Charon.git Charon
+        git submodule init
+    fi
+
+    git pull --recurse-submodules --jobs=10
+    git submodule update --recursive
 fi
 
 #src/update_dependencies.sh
