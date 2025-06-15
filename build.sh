@@ -21,7 +21,7 @@ if [ ! -f dotnet-install.sh ]; then
     wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
     chmod +x ./dotnet-install.sh
 
-    ./dotnet-install.sh --version latest
+    ./dotnet-install.sh --channel STS --version latest
 fi
 
 function apt_install() {
