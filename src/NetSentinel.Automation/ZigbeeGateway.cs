@@ -164,7 +164,7 @@ User=pi
 [Install]
 WantedBy=multi-user.target");
 
-        var path = Path.Combine("etc", "systemd", "system", "zigbee2mqtt.service");
+        var path = Path.Combine("/etc", "systemd", "system", "zigbee2mqtt.service");
 
         Shell.SudoExecute("cp", [tempPath, path], shellOptions);
     }
