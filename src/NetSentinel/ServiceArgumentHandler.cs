@@ -13,7 +13,7 @@ public sealed class ServiceArgumentHandler : ArgumentHandlerBase, IServiceOption
 
     public override void Execute(IGlobalOptions options)
     {
-        Service.Run<Worker>("NetSentinel", this, Environment.GetCommandLineArgs());
+        Charon.Hosting.Service.Run<Worker>("NetSentinel", this, Environment.GetCommandLineArgs());
     }
 
     protected override bool Process(string argument, string[] arguments, ref int index)

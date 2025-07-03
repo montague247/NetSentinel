@@ -7,7 +7,7 @@ public sealed class ZigbeeGatewayArgumentHandler : IArgumentHandler
 {
     public void Execute(IGlobalOptions options)
     {
-        ZigbeeGateway.EnsureServices(options);
+        ZigbeeGateway.EnsureServices(options, default);
     }
 
     public void Process(string[] arguments, ref int index)

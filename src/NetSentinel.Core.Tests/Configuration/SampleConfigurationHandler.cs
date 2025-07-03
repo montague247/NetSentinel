@@ -2,9 +2,9 @@ using NetSentinel.Configuration;
 
 namespace NetSentinel.Core.Tests.Configuration;
 
-public sealed class SampleConfigurationHandler : IConfigurationHandler<SampleConfiguration>
+public sealed class SampleConfigurationHandler : ConfigurationHandlerBase<SampleConfiguration>
 {
-    public void Execute(SampleConfiguration configuration)
+    public override void Execute(SampleConfiguration configuration, CancellationToken cancellationToken)
     {
         // nothing to do here
     }

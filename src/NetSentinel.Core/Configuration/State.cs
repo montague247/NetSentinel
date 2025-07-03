@@ -11,11 +11,14 @@ public sealed class State
     public int? Repeated { get; set; }
 
     [JsonPropertyName("state")]
-    public JsonElement StateRaw { get; set; }
+    public JsonElement? StateRaw { get; set; }
 
     public T GetState<T>()
     {
-        return StateRaw.Deserialize<T>() ?? throw new InvalidOperationException("Failed to deserialize state.");
+        if (StateRaw == null || StateRaw.Value.ValueKind == JsonValueKind.Null)
+            return default!;
+
+        return StateRaw.Value.Deserialize<T>() ?? throw new InvalidOperationException("Failed to deserialize state.");
     }
 
     public State SetState<T>(T state)

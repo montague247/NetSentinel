@@ -8,12 +8,12 @@ public sealed class ConfigurationsTests
     public void LoadNotExisting()
     {
         var path = Path.Combine($"{nameof(ConfigurationsTests)}-{nameof(LoadNotExisting)}.json");
-        var configurations = Configurations.Load(path);
+        var configurations = Configurations.Load(path, default);
 
         Assert.NotNull(configurations);
         Assert.NotNull(configurations.Entries);
         Assert.NotNull(configurations.Types);
-        Assert.Single(configurations.Types);
+        Assert.Equal(2, configurations.Types.Count);
         Assert.Contains("Sample", configurations.Types);
 
         var entry = configurations.GetEntry("Sample");
@@ -21,10 +21,28 @@ public sealed class ConfigurationsTests
     }
 
     [Fact]
+    public void LoadExisting()
+    {
+        var path = Path.Combine($"{nameof(ConfigurationsTests)}-{nameof(LoadExisting)}.json");
+
+        var configurations = Configurations.Load(path, default);
+        configurations.SetEntry("a", new());
+        configurations.SetEntry("b", new());
+        configurations.SetEntry("c", new());
+        configurations.Save(default);
+
+        configurations = Configurations.Load(path, default);
+
+        Assert.NotNull(configurations);
+        Assert.NotNull(configurations.Entries);
+        Assert.Equal(3, configurations.Entries.Count);
+    }
+
+    [Fact]
     public void Sample()
     {
         var path = Path.GetFullPath(Path.Combine($"{nameof(ConfigurationsTests)}-{nameof(Sample)}.json"));
-        var configurations = Configurations.Load(path);
+        var configurations = Configurations.Load(path, default);
 
         var entry = new ConfigurationEntry
         {
@@ -45,7 +63,7 @@ public sealed class ConfigurationsTests
         Sample();
 
         var path = Path.GetFullPath(Path.Combine($"{nameof(ConfigurationsTests)}-{nameof(Sample)}.json"));
-        var configurations = Configurations.Load(path);
+        var configurations = Configurations.Load(path, default);
 
         Assert.NotNull(configurations);
         Assert.NotNull(configurations.Entries);
@@ -75,5 +93,24 @@ public sealed class ConfigurationsTests
         Assert.Equal(2, entries.Length);
         Assert.Contains(entries, e => e.Name == "Second sample");
         Assert.Contains(entries, e => e.Name == nameof(Sample));
+    }
+
+    [Fact]
+    public void Execute()
+    {
+        var configurations = new Configurations();
+        Configurations.FillTypes(configurations.Types);
+
+        var entry = new ConfigurationEntry
+        {
+            Scheduling = new()
+        };
+        entry.SetConfiguration(new SampleConfiguration
+        {
+            IntValue = 42,
+            StringValue = "Hello, World!"
+        });
+        configurations.SetEntry(nameof(Execute), entry);
+        Assert.True(configurations.Execute(nameof(Execute), default));
     }
 }

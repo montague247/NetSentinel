@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Charon;
 using Charon.IO;
+using Serilog;
 
 namespace NetSentinel.Configuration;
 
@@ -13,14 +14,21 @@ public sealed class States
 
     public Dictionary<string, State> Entries { get; set; } = [];
 
-    public static States Load(string path)
+    public static States Load(string path, CancellationToken cancellationToken)
     {
-        var config = JsonExtensions.FromFile<States>(path, false) ?? new();
+        if (string.IsNullOrEmpty(path))
+            throw new ArgumentException("State path cannot be null or empty.", nameof(path));
 
-        config._path = path;
-        config.ProcessId = Environment.ProcessId;
+        Log.Information("Loading states from '{Path}'...", path);
 
-        return config;
+        var states = JsonExtensions.FromFile<States>(path, false) ?? new();
+
+        states._path = path;
+        states.ProcessId = Environment.ProcessId;
+
+        states.Save(cancellationToken);
+
+        return states;
     }
 
     public State? GetEntry(string name)
@@ -31,14 +39,29 @@ public sealed class States
         return entry;
     }
 
-    public States SetEntry(string name, State entry)
+    public bool SetEntry(string name, State entry)
     {
+        ArgumentNullException.ThrowIfNull(entry);
+
         Entries ??= [];
 
-        if (!Entries.TryAdd(name, entry))
-            Entries[name] = entry;
+        if (Entries.TryGetValue(name, out State? currentEntry))
+        {
+            if (string.Compare(entry?.ToJson(), currentEntry?.ToJson(), StringComparison.Ordinal) != 0)
+            {
+                Entries[name] = entry!;
 
-        return this;
+                return true;
+            }
+        }
+        else
+        {
+            Entries.Add(name, entry);
+
+            return true;
+        }
+
+        return false;
     }
 
     public void Save(CancellationToken cancellationToken)

@@ -3,9 +3,9 @@ using NetSentinel.Configuration;
 
 namespace NetSentinel.System
 {
-    public sealed class PackageUpdateConfigurationHandler : IConfigurationHandler<PackageUpdateConfiguration>
+    public sealed class PackageUpdateConfigurationHandler : ConfigurationHandlerBase<PackageUpdateConfiguration>
     {
-        public void Execute(PackageUpdateConfiguration configuration)
+        public override void Execute(PackageUpdateConfiguration configuration, CancellationToken cancellationToken)
         {
             PackageUpdater.Execute(configuration);
 

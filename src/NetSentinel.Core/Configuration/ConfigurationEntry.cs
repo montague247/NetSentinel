@@ -7,6 +7,8 @@ namespace NetSentinel.Configuration;
 
 public sealed class ConfigurationEntry
 {
+    public bool? Enabled { get; set; }
+
     [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
     public string? Name { get; internal set; }
 
@@ -15,11 +17,14 @@ public sealed class ConfigurationEntry
     public Scheduling? Scheduling { get; set; }
 
     [JsonPropertyName("configuration")]
-    public JsonElement ConfigurationRaw { get; set; }
+    public JsonElement? ConfigurationRaw { get; set; }
 
     public T GetConfiguration<T>()
     {
-        return ConfigurationRaw.Deserialize<T>() ?? throw new InvalidOperationException("Failed to deserialize configuration.");
+        if (ConfigurationRaw == null || ConfigurationRaw.Value.ValueKind == JsonValueKind.Null)
+            return default!;
+
+        return ConfigurationRaw.Value.Deserialize<T>() ?? throw new InvalidOperationException("Failed to deserialize configuration.");
     }
 
     public ConfigurationEntry SetConfiguration<T>(T configuration)

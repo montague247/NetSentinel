@@ -17,7 +17,7 @@ public sealed class PackageUpdateArgumentHandler : ArgumentHandlerBase
             SudoAlternative = options.SudoAlternative
         };
 
-        new PackageUpdateConfigurationHandler().Execute(configuration);
+        new PackageUpdateConfigurationHandler().Execute(configuration, default);
     }
 
     protected override bool Process(string argument, string[] arguments, ref int index)

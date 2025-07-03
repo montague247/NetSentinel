@@ -9,7 +9,7 @@ public static class ZigbeeGateway
 {
     private const string AppPath = "/opt/zigbee2mqtt";
 
-    public static void EnsureRaspBeeIIService(IShellOptions shellOptions)
+    public static void EnsureRaspBeeIIService(IShellOptions shellOptions, CancellationToken cancellationToken)
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             throw new PlatformNotSupportedException("RaspBee II service is not supported on Windows.");
@@ -18,24 +18,33 @@ public static class ZigbeeGateway
 
         if (!shellOptions.NoInstall)
         {
+            Log.Warning("Install RTC manually: https://phoscon.de/en/raspbee2/install#raspbian");
+
             Shell.BashExecute("wget -O - http://phoscon.de/apt/deconz.pub.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/deconz.gpg > /dev/null");
             var parts = Shell.GetOutput("lsb_release", ["-cs"]).GetAwaiter().GetResult()?.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
             if (parts == null || parts.Length == 0)
                 throw new InvalidOperationException("Failed to determine distribution codename.");
 
+            if (cancellationToken.IsCancellationRequested)
+                return;
+
             var codename = parts[^1];
             var repoLine = $"deb http://phoscon.de/apt/deconz {codename} main";
 
             Shell.BashExecute($"echo \"{repoLine}\" | sudo tee /etc/apt/sources.list.d/deconz.list");
 
+            if (cancellationToken.IsCancellationRequested)
+                return;
+
             Shell.CheckInstall(shellOptions, "libusb-1.0-0-dev", "libudev-dev", "deconz");
         }
 
-        Service.Start("deconz", shellOptions);
+        if (!cancellationToken.IsCancellationRequested)
+            Charon.System.Service.Start("deconz", shellOptions);
     }
 
-    public static void EnsureZigbee2MQTTService(IShellOptions shellOptions)
+    public static void EnsureZigbee2MQTTService(IShellOptions shellOptions, CancellationToken cancellationToken)
     {
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             throw new PlatformNotSupportedException("Zigbee2MQTT service is not supported on Windows.");
@@ -45,27 +54,39 @@ public static class ZigbeeGateway
         if (!shellOptions.NoInstall)
         {
             Shell.EnsureNodeJS(shellOptions);
+
+            if (cancellationToken.IsCancellationRequested)
+                return;
+
             Shell.CheckInstall(shellOptions, "nodejs", "git", "make", "g++", "gcc", "libsystemd-dev");
+
+            if (cancellationToken.IsCancellationRequested)
+                return;
+
             Shell.SudoExecute("corepack", ["enable"], shellOptions);
 
-            EnsureZigbee2MQTTApp(shellOptions);
-            CreateZigbee2MQTTService(shellOptions);
+            EnsureZigbee2MQTTApp(shellOptions, cancellationToken);
+            CreateZigbee2MQTTService(shellOptions, cancellationToken);
         }
 
-        Service.Start("zigbee2mqtt", shellOptions);
+        if (!cancellationToken.IsCancellationRequested)
+            Charon.System.Service.Start("zigbee2mqtt", shellOptions);
     }
 
-    public static void EnsureServices(IShellOptions shellOptions)
+    public static void EnsureServices(IShellOptions shellOptions, CancellationToken cancellationToken)
     {
         if (!RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             return;
 
-        EnsureRaspBeeIIService(shellOptions);
-        EnsureZigbee2MQTTService(shellOptions);
+        EnsureRaspBeeIIService(shellOptions, cancellationToken);
+        EnsureZigbee2MQTTService(shellOptions, cancellationToken);
     }
 
-    private static void EnsureZigbee2MQTTApp(IShellOptions shellOptions)
+    private static void EnsureZigbee2MQTTApp(IShellOptions shellOptions, CancellationToken cancellationToken)
     {
+        if (cancellationToken.IsCancellationRequested)
+            return;
+
         Log.Information("Ensuring Zigbee2MQTT application at {Path}", AppPath);
 
         if (Directory.Exists(AppPath))
@@ -98,39 +119,45 @@ version: 4
 
 # Home Assistant integration (MQTT discovery)
 homeassistant:
-    enabled: false
+  enabled: true
 
 # Enable the frontend, runs on port 8080 by default
 frontend:
-    enabled: true
+  enabled: true
+  port: 8080
+  url: 'http://{Environment.MachineName}.local:8080'
 
 # MQTT settings
 mqtt:
-    # MQTT base topic for zigbee2mqtt MQTT messages
-    base_topic: zigbee2mqtt
-    # MQTT server URL
-    server: 'mqtt://localhost'
-    # MQTT server authentication
-    user: '{SecurityExtensions.CreateSecurePassword(16)}'
-    password: '{SecurityExtensions.CreateSecurePassword(32)}'
+  # MQTT base topic for zigbee2mqtt MQTT messages
+  base_topic: zigbee2mqtt
+  # MQTT server URL
+  server: mqtt://localhost:1883
+  # MQTT server authentication
+  user: '{SecurityExtensions.CreateSecurePassword(16)}'
+  password: '{SecurityExtensions.CreateSecurePassword(32)}'
 
 serial:
-    port: '/dev/ttyAMA0'  # Port for RaspBee II
-    adapter: 'deconz'  # Adapter for RaspBee II
+  # Serial port for the Zigbee adapter
+  # For RaspBee II, this is typically /dev/ttyAMA0
+  port: /dev/ttyAMA0
+  # Serial adapter type
+  # For RaspBee II, use 'deconz'
+  adapter: deconz
 
 # Periodically check whether devices are online/offline
 availability:
-    enabled: true
+  enabled: true
 
 # Advanced settings
 advanced:
-    # channel: 11
-    # Let Zigbee2MQTT generate a network key on first start
-    network_key: GENERATE
-    # Let Zigbee2MQTT generate a pan_id on first start
-    pan_id: GENERATE
-    # Let Zigbee2MQTT generate a ext_pan_id on first start
-    ext_pan_id: GENERATE";
+  # channel: 11
+  # Let Zigbee2MQTT generate a network key on first start
+  network_key: GENERATE
+  # Let Zigbee2MQTT generate a pan_id on first start
+  pan_id: GENERATE
+  # Let Zigbee2MQTT generate a ext_pan_id on first start
+  ext_pan_id: GENERATE";
 
             File.WriteAllText(tempConfigurationPath, defaultConfig);
 
@@ -140,8 +167,11 @@ advanced:
         }
     }
 
-    private static void CreateZigbee2MQTTService(IShellOptions shellOptions)
+    private static void CreateZigbee2MQTTService(IShellOptions shellOptions, CancellationToken cancellationToken)
     {
+        if (cancellationToken.IsCancellationRequested)
+            return;
+
         var tempPath = Path.GetFullPath("zigbee2mqtt.service");
 
         File.WriteAllText(tempPath, $@"[Unit]
