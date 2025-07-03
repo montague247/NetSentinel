@@ -1,7 +1,7 @@
 using Charon.Hosting;
 using Microsoft.Extensions.Hosting;
 using NetSentinel.Configuration;
-using NetSentinel.Service;
+using NetSentinel.Scheduling;
 
 namespace NetSentinel;
 
@@ -13,7 +13,7 @@ public sealed class Worker(IHostApplicationLifetime hostApplicationLifetime) : W
 
     protected override Task OnStart(CancellationToken cancellationToken)
     {
-        _configurations = Configurations.Load(Charon.Hosting.Service.Options?.ConfigPath, cancellationToken);
+        _configurations = Configurations.Load(Service.Options?.ConfigPath, cancellationToken);
         _states = _configurations.LoadStates(cancellationToken);
 
         return base.OnStart(cancellationToken);

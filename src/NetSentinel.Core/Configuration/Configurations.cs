@@ -57,7 +57,7 @@ public sealed class Configurations
             .ToArray();
     }
 
-    public bool Execute(ConfigurationEntry entry, CancellationToken cancellationToken)
+    public async Task<bool> Execute(ConfigurationEntry entry, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(entry);
 
@@ -92,7 +92,7 @@ public sealed class Configurations
 
         try
         {
-            handler.Execute(entry, cancellationToken);
+            await handler.Execute(entry, cancellationToken);
         }
         catch (Exception ex)
         {
@@ -103,7 +103,7 @@ public sealed class Configurations
         return true;
     }
 
-    public bool Execute(string name, CancellationToken cancellationToken)
+    public async Task<bool> Execute(string name, CancellationToken cancellationToken)
     {
         var entry = GetEntry(name);
 
@@ -113,7 +113,7 @@ public sealed class Configurations
             return false;
         }
 
-        return Execute(entry, cancellationToken);
+        return await Execute(entry, cancellationToken);
     }
 
     public ConfigurationEntry? GetEntry(string name)

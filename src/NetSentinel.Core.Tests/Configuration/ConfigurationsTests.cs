@@ -96,7 +96,7 @@ public sealed class ConfigurationsTests
     }
 
     [Fact]
-    public void Execute()
+    public async Task Execute()
     {
         var configurations = new Configurations();
         Configurations.FillTypes(configurations.Types);
@@ -111,6 +111,6 @@ public sealed class ConfigurationsTests
             StringValue = "Hello, World!"
         });
         configurations.SetEntry(nameof(Execute), entry);
-        Assert.True(configurations.Execute(nameof(Execute), default));
+        Assert.True(await configurations.Execute(nameof(Execute), default));
     }
 }

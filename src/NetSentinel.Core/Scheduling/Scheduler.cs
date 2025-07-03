@@ -1,25 +1,27 @@
 using NetSentinel.Configuration;
 
-namespace NetSentinel.Service;
+namespace NetSentinel.Scheduling;
 
 public sealed class Scheduler
 {
     private readonly Dictionary<string, LocalState> _localStates = [];
 
-    public void Process(Configurations? configurations, States? states, CancellationToken cancellationToken)
+    public async Task Process(Configurations? configurations, States? states, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(configurations);
         ArgumentNullException.ThrowIfNull(states);
 
-        foreach (var configuration in configurations.Entries.Where(s => s.Value.Enabled ?? true && s.Value.Scheduling != null))
+        foreach (var configuration in configurations.Entries.Values.Where(s => s.Enabled ?? true && s.Scheduling != null))
         {
             if (cancellationToken.IsCancellationRequested)
                 return;
 
-            var state = states.GetEntry(configuration.Key) ?? new();
-            var localState = GetLocalState(configuration.Key, state);
+            var state = states.GetEntry(configuration.Name!) ?? new();
+            var localState = GetLocalState(configuration.Name!, state);
 
-            if (states.SetEntry(configuration.Key, state!))
+            await configurations.Execute(configuration, cancellationToken);
+
+            if (states.SetEntry(configuration.Name!, state!))
             {
                 // Save the state if it has changed
                 states.Save(cancellationToken);
