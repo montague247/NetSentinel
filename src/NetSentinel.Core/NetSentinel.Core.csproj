@@ -9,7 +9,7 @@
     <Copyright>Copyright © 2025 Dirk Helbig</Copyright>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Iot.Device.Bindings" Version="4.0.1" />
+    <PackageReference Include="Iot.Device.Bindings" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
   </ItemGroup>
   <ItemGroup>
