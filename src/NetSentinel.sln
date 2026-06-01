@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetSentinel.Core.Tests", "N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charon.Core", "..\Charon\src\Charon.Core\Charon.Core.csproj", "{8A31EBB0-2B75-4F35-9EDE-016F19E5C3B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charon.Core.Tests", "..\Charon\src\Charon.Core.Tests\Charon.Core.Tests.csproj", "{0677F4E6-5C16-4D3A-8D45-FD7BF09DA625}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charon.Core.Tests", "..\Charon\tests\Charon.Core.Tests\Charon.Core.Tests.csproj", "{0677F4E6-5C16-4D3A-8D45-FD7BF09DA625}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Charon.Hosting", "..\Charon\src\Charon.Hosting\Charon.Hosting.csproj", "{3C97CB2A-D5AA-4AC0-8CB8-11F45A2646BA}"
 EndProject
